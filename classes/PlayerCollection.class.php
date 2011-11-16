@@ -5,7 +5,8 @@
  *
  * @author Peter Meth
  */
-class PlayerCollection {
+class PlayerCollection implements Countable, Iterator {
+
 
 }
 
