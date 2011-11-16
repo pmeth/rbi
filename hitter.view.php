@@ -9,18 +9,18 @@ $myhitter = new Hitter($myrom, 190444);
 
 
 $hitterdetails = '
-Hitter:<br />
-Offset: ' . $myhitter->getOffset() . '<br />
-Name: ' . $myhitter->getName() . '<br />
-Lineup #: ' . $myhitter->getLineupNumber() . '<br />
-Type: ' . $myhitter->getType() . '<br />
-Pos: ' . $myhitter->getPosition() . '<br />
-Bats: ' . $myhitter->getBats() . '<br />
-Avg: ' . $myhitter->getAverage() . '<br />
-HR: ' . $myhitter->getHomeruns() . '<br />
-Power: ' . $myhitter->getPower() . '<br />
-Contact: ' . $myhitter->getContact() . '<br />
-Speed: ' . $myhitter->getSpeed() . '<br />
+	Hitter:<br />
+	Offset: ' . $myhitter->getOffset() . '<br />
+	Name: ' . $myhitter->getName() . '<br />
+	Lineup #: ' . $myhitter->getLineupNumber() . '<br />
+	Type: ' . $myhitter->getType() . '<br />
+	Pos: ' . $myhitter->getPosition() . '<br />
+	Bats: ' . $myhitter->getBats() . '<br />
+	Avg: ' . $myhitter->getAverage() . '<br />
+	HR: ' . $myhitter->getHomeruns() . '<br />
+	Power: ' . $myhitter->getPower() . '<br />
+	Contact: ' . $myhitter->getContact() . '<br />
+	Speed: ' . $myhitter->getSpeed() . '<br />
 ';
 
 echo "<!DOCTYPE html>

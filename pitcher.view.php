@@ -9,20 +9,20 @@ $mypitcher = new Pitcher($myrom, 206936);
 
 
 $pitcherdetails = '
-Pitcher:<br />
-Offset ' . $mypitcher->getOffset() . '<br />
-Name: ' . $mypitcher->getName() . '<br />
-Lineup #: ' . $mypitcher->getLineupNumber() . '<br />
-Type: ' . $mypitcher->getType() . '<br />
-ERA: ' . $mypitcher->getEra() . '<br />
-Throws: ' . $mypitcher->getThrows() . '<br />
-Sink Spd: ' . $mypitcher->getSinkerspeed() . '<br />
-Curv Spd: ' . $mypitcher->getCurvespeed() . '<br />
-Fast Spd: ' . $mypitcher->getFastballspeed() . '<br />
-Curv Left: ' . $mypitcher->getCurveleft() . '<br />
-Curv Rt: ' . $mypitcher->getCurveright() . '<br />
-Stamina: ' . $mypitcher->getStamina() . '<br />
-Sink: ' . $mypitcher->getSink() . '<br />
+	Pitcher:<br />
+	Offset ' . $mypitcher->getOffset() . '<br />
+	Name: ' . $mypitcher->getName() . '<br />
+	Lineup #: ' . $mypitcher->getLineupNumber() . '<br />
+	Type: ' . $mypitcher->getType() . '<br />
+	ERA: ' . $mypitcher->getEra() . '<br />
+	Throws: ' . $mypitcher->getThrows() . '<br />
+	Sink Spd: ' . $mypitcher->getSinkerspeed() . '<br />
+	Curv Spd: ' . $mypitcher->getCurvespeed() . '<br />
+	Fast Spd: ' . $mypitcher->getFastballspeed() . '<br />
+	Curv Left: ' . $mypitcher->getCurveleft() . '<br />
+	Curv Rt: ' . $mypitcher->getCurveright() . '<br />
+	Stamina: ' . $mypitcher->getStamina() . '<br />
+	Sink: ' . $mypitcher->getSink() . '<br />
 ';
 
 echo "<!DOCTYPE html>
