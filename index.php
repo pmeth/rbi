@@ -3,7 +3,6 @@ error_reporting(E_ALL);
 include_once('classes/player.class.php');
 include_once('classes/hitter.class.php');
 include_once('classes/pitcher.class.php');
-include_once('classes/baseConvert.class.php');
 
 $myhitter = new Hitter(190444);
 $mypitcher = new Pitcher(206936);

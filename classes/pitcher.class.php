@@ -24,7 +24,7 @@ class pitcher extends Player {
 	protected $sink;
 
 	function __construct($offset) {
-		parent::__construct($offset, $converter);
+		parent::__construct($offset);
 
 		$this->generateEra();
 		$this->generateThrows();

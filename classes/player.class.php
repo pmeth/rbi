@@ -18,8 +18,6 @@ class Player {
 	protected $lineupNumber;
 
 	public function __construct($offset) {
-		$this->converter = $converter;
-
 		$this->offset = $offset;
 		if ($offset >= $this->hexToDec("16010") * 2 && $offset <= $this->hexToDec("17f90") * 2) {
 			$this->type = "hitter";

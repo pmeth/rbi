@@ -10,7 +10,7 @@ class Hitter extends Player {
 	protected $speed;
 
     public function __construct($offset) { 
-        parent::__construct($offset, $converter);
+        parent::__construct($offset);
 
 		if($this->type != 'hitter') {
 			throw new Exception('This offset does not represent a hitter');
