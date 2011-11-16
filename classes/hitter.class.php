@@ -9,8 +9,8 @@ class Hitter extends Player {
 	protected $contact;
 	protected $speed;
 
-    public function __construct($offset) { 
-        parent::__construct($offset);
+    public function __construct(Rom $rom, $offset) {
+        parent::__construct($rom, $offset);
 
 		if($this->type != 'hitter') {
 			throw new Exception('This offset does not represent a hitter');
@@ -23,7 +23,7 @@ class Hitter extends Player {
 		$this->generateContact();
 		$this->generateSpeed();
 
-    } 
+    }
 
 	public function setHomeruns($newhomeruns) {
 		$this->homeruns = $newhomeruns;

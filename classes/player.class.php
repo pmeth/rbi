@@ -5,9 +5,6 @@ class Player {
 	protected $offset;
 	protected $name;
 	protected $type;
-	protected $filename = "../rbi2008.nes";
-	protected $romBinary;
-	protected $romHex;
 	protected $playerHex;
 	protected $nameHexToChar;
 	protected $nameCharToHex;
@@ -16,8 +13,11 @@ class Player {
 	protected $teams;
 	protected $converter;
 	protected $lineupNumber;
+	protected $rom;
+	protected $team;
 
-	public function __construct($offset) {
+	public function __construct(Rom $rom, $offset) {
+		$this->rom = $rom;
 		$this->offset = $offset;
 		if ($offset >= $this->hexToDec("16010") * 2 && $offset <= $this->hexToDec("17f90") * 2) {
 			$this->type = "hitter";
@@ -28,12 +28,6 @@ class Player {
 		}
 
 
-		// start - this is a candidate to be separated into it's own class.  too lazy right now.
-		$handle = fopen($this->filename, "r");
-		$this->romBinary = fread($handle, filesize($this->filename));
-		fclose($handle);
-		$this->romHex = bin2hex($this->romBinary);
-		// end - this is a candidate to be separated into it's own class.  too lazy right now.
 
 		$this->generateNameMappings();
 		$this->generateTeamMappings();
@@ -41,9 +35,13 @@ class Player {
 		$this->generatePlayerHex();
 		$this->generateLineupNumber();
 		$this->generateName();
+		$this->generateTeam();
+	}
+	public function getTeam() {
+		return $this->team;
 	}
 
-	public function getName() {
+		public function getName() {
 		return $this->name;
 	}
 
@@ -165,12 +163,14 @@ class Player {
 		$numcharacters = $end - $start;
 
 		//echo "$start - $end";
-		$newstring = substr($this->romHex, $start, $numcharacters);
-		$chunked = chunk_split($newstring, 4, ",");
-		$teamshex = explode(",", $chunked);
+		$newstring = $this->rom->getHexString($start, $numcharacters);
+//		$chunked = chunk_split($newstring, 4, ",");
+//		$teamshex = explode(",", $chunked);
+//
+//		// strip off last entry (it's blank)
+//		unset($teamshex[count($teamshex) - 1]);
 
-		// strip off last entry (it's blank)
-		unset($teamshex[count($teamshex) - 1]);
+		$teamshex = str_split($newstring, 4);
 
 		// remove teams 30 & 31, they're not used
 		unset($teamshex[29]);
@@ -181,12 +181,15 @@ class Player {
 		}
 	}
 
+	protected function generateTeam() {
+
+	}
 	protected function generatePlayerHex() {
 		$start = $this->offset;
 		$numcharacters = 36;
 
 		//echo "$start - $end";
-		$this->playerHex = substr($this->romHex, $start, $numcharacters);
+		$this->playerHex = $this->rom->getHexString($start, $numcharacters);
 		//echo $this->playerHex;
 	}
 
@@ -204,7 +207,7 @@ class Player {
 		$this->name .= $this->nameHexToChar[substr($this->playerHex, 32, 2)];
 		$this->name .= $this->nameHexToChar[substr($this->playerHex, 34, 2)];
 	}
-	
+
 	protected function hexToDec($hex) {
 		return base_convert($hex, 16, 10);
 	}
