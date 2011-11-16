@@ -23,7 +23,7 @@ class pitcher extends Player {
 	protected $stamina;
 	protected $sink;
 
-	function __construct($offset, BaseConvert $converter) {
+	function __construct($offset) {
 		parent::__construct($offset, $converter);
 
 		$this->generateEra();
@@ -56,18 +56,18 @@ class pitcher extends Player {
 		}
 	}
 
-	public function generateEra() {
+	protected function generateEra() {
 		$this->generateEraTable();
-		$eraindex = $this->converter->hexToDec(substr($this->playerHex, 16, 2));
+		$eraindex = $this->hexToDec(substr($this->playerHex, 16, 2));
 		$this->era = $this->eratable[$eraindex];
 	}
 
-	public function generateEraTable() {
+	protected function generateEraTable() {
 		$this->eratable = array();
 // first, let's read the era tables
 // the first table is 19d88 - 19e94
-		$start = $this->converter->hexToDec("19d88") * 2;
-		$end = $this->converter->hexToDec("19e94") * 2;
+		$start = $this->hexToDec("19d88") * 2;
+		$end = $this->hexToDec("19e94") * 2;
 		$numcharacters = $end - $start;
 
 //echo "$start - $end";
@@ -79,7 +79,7 @@ class pitcher extends Player {
 		unset($era1hex[count($era1hex) - 1]);
 //print_r($era1hex);
 // the second table starts at 19f10, and has half the number of characters as table 1
-		$start = $this->converter->hexToDec("19f48") * 2;
+		$start = $this->hexToDec("19f48") * 2;
 		$numcharacters = round($numcharacters / 2);
 
 //echo "$start - $end";
@@ -114,32 +114,32 @@ class pitcher extends Player {
 		$this->era = $era;
 	}
 
-	public function generateSinkerSpeed() {
-		$this->sinkerspeed = $this->converter->hexToDec(substr($this->playerHex, 18, 2));
+	protected function generateSinkerSpeed() {
+		$this->sinkerspeed = $this->hexToDec(substr($this->playerHex, 18, 2));
 	}
 
-	public function generateCurveSpeed() {
-		$this->curvespeed = $this->converter->hexToDec(substr($this->playerHex, 20, 2));
+	protected function generateCurveSpeed() {
+		$this->curvespeed = $this->hexToDec(substr($this->playerHex, 20, 2));
 	}
 
-	public function generateFastballSpeed() {
-		$this->fastballspeed = $this->converter->hexToDec(substr($this->playerHex, 22, 2));
+	protected function generateFastballSpeed() {
+		$this->fastballspeed = $this->hexToDec(substr($this->playerHex, 22, 2));
 	}
 
-	public function generateCurveLeft() {
-		$this->curveleft = $this->converter->hexToDec(substr($this->playerHex, 24, 1));
+	protected function generateCurveLeft() {
+		$this->curveleft = $this->hexToDec(substr($this->playerHex, 24, 1));
 	}
 
-	public function generateCurveRight() {
-		$this->curveright = $this->converter->hexToDec(substr($this->playerHex, 25, 1));
+	protected function generateCurveRight() {
+		$this->curveright = $this->hexToDec(substr($this->playerHex, 25, 1));
 	}
 
-	public function generateStamina() {
-		$this->stamina = $this->converter->hexToDec(substr($this->playerHex, 26, 2));
+	protected function generateStamina() {
+		$this->stamina = $this->hexToDec(substr($this->playerHex, 26, 2));
 	}
 
-	public function generateSink() {
-		$this->sink = $this->converter->hexToDec(substr($this->playerHex, 30, 2));
+	protected function generateSink() {
+		$this->sink = $this->hexToDec(substr($this->playerHex, 30, 2));
 	}
 
 	public function getSinkerspeed() {

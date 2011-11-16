@@ -9,7 +9,7 @@ class Hitter extends Player {
 	protected $contact;
 	protected $speed;
 
-    public function __construct($offset, BaseConvert $converter) { 
+    public function __construct($offset) { 
         parent::__construct($offset, $converter);
 
 		if($this->type != 'hitter') {
@@ -82,7 +82,7 @@ class Hitter extends Player {
 	}
 
 	public function generateHomeruns() {
-		$this->homeruns = $this->converter->hexToDec(substr($this->playerHex, 18, 2));
+		$this->homeruns = $this->hexToDec(substr($this->playerHex, 18, 2));
 	}
 
 	public function generateBats() {
@@ -106,21 +106,21 @@ class Hitter extends Player {
 	}
 
 	public function generateAverage() {
-		$this->average = 111 + $this->converter->hexToDec(substr($this->playerHex, 16, 2));
+		$this->average = 111 + $this->hexToDec(substr($this->playerHex, 16, 2));
 	}
 
 	public function generatePower() {
-		$this->power = $this->converter->hexToDec(substr($this->playerHex, 24, 2) . substr($this->playerHex, 22, 2));
+		$this->power = $this->hexToDec(substr($this->playerHex, 24, 2) . substr($this->playerHex, 22, 2));
 
 	}
 
 	public function generateContact() {
-		$this->contact = $this->converter->hexToDec(substr($this->playerHex, 20, 2));
+		$this->contact = $this->hexToDec(substr($this->playerHex, 20, 2));
 
 	}
 
 	public function generateSpeed() {
-		$this->speed = $this->converter->hexToDec(substr($this->playerHex, 26, 2));
+		$this->speed = $this->hexToDec(substr($this->playerHex, 26, 2));
 
 	}
 

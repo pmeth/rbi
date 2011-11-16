@@ -17,13 +17,13 @@ class Player {
 	protected $converter;
 	protected $lineupNumber;
 
-	public function __construct($offset, BaseConvert $converter) {
+	public function __construct($offset) {
 		$this->converter = $converter;
 
 		$this->offset = $offset;
-		if ($offset >= $this->converter->hexToDec("16010") * 2 && $offset <= $this->converter->hexToDec("17f90") * 2) {
+		if ($offset >= $this->hexToDec("16010") * 2 && $offset <= $this->hexToDec("17f90") * 2) {
 			$this->type = "hitter";
-		} elseif ($offset >= $this->converter->hexToDec("18010") * 2 && $offset <= $this->converter->hexToDec("19f48") * 2) {
+		} elseif ($offset >= $this->hexToDec("18010") * 2 && $offset <= $this->hexToDec("19f48") * 2) {
 			$this->type = "pitcher";
 		} else {
 			throw new Exception('Offset does not map to a player.');
@@ -162,8 +162,8 @@ class Player {
 	}
 
 	protected function generateTeams() {
-		$start = $this->converter->hexToDec("9e1d") * 2;
-		$end = $this->converter->hexToDec("9e5d") * 2;
+		$start = $this->hexToDec("9e1d") * 2;
+		$end = $this->hexToDec("9e5d") * 2;
 		$numcharacters = $end - $start;
 
 		//echo "$start - $end";
@@ -193,7 +193,7 @@ class Player {
 	}
 
 	protected function generateLineupNumber() {
-		$this->lineupNumber = $this->converter->hexToDec(substr($this->playerHex, 0, 2));
+		$this->lineupNumber = $this->hexToDec(substr($this->playerHex, 0, 2));
 	}
 
 	protected function generateName() {
@@ -206,6 +206,9 @@ class Player {
 		$this->name .= $this->nameHexToChar[substr($this->playerHex, 32, 2)];
 		$this->name .= $this->nameHexToChar[substr($this->playerHex, 34, 2)];
 	}
-
+	
+	protected function hexToDec($hex) {
+		return base_convert($hex, 16, 10);
+	}
 }
 

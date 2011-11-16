@@ -5,8 +5,8 @@ include_once('classes/hitter.class.php');
 include_once('classes/pitcher.class.php');
 include_once('classes/baseConvert.class.php');
 
-$myhitter = new Hitter(190444, new BaseConvert());
-$mypitcher = new Pitcher(206936, new BaseConvert());
+$myhitter = new Hitter(190444);
+$mypitcher = new Pitcher(206936);
 //$myplayer->setOffset(190444);
 echo '
 Player 1:<br />
