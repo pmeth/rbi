@@ -1,5 +1,6 @@
 <?php
 include_once('classes/Rom.class.php');
+include_once('classes/RBI3Rom.class.php');
 include_once('classes/RBI3AndyBRom.class.php');
 include_once('classes/Player.class.php');
 include_once('classes/Pitcher.class.php');
