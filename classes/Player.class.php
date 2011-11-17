@@ -52,16 +52,20 @@ class Player {
 		$this->lineupNumber = $newlineupNumber;
 	}
 
-	public function setTeam($team) {
-		$this->team = $team;
-	}
-
 	public function getType() {
 		return $this->type;
 	}
 
 	protected function generateTeam() {
-		
+		if ($this->type == 'hitter') {
+			$start = $this->rom->getHitterStart();
+		} else {
+			$start = $this->rom->getPitcherStart();
+		}
+		$playeroffset = ($this->offset - $start) / 36;
+		$teamoffset = floor($playeroffset / 14);
+		$teams = $this->rom->getTeams();
+		$this->team = $teams[$teamoffset + 1];
 	}
 
 	protected function generatePlayerHex() {
@@ -89,6 +93,11 @@ class Player {
 		$this->name .= $lookuptable[substr($this->playerHex, 12, 2)];
 		$this->name .= $lookuptable[substr($this->playerHex, 32, 2)];
 		$this->name .= $lookuptable[substr($this->playerHex, 34, 2)];
+	}
+
+	public function writeToRom() {
+		$this->rom->setHexString($this->playerHex, $this->offset);
+		$this->rom->save();
 	}
 
 	protected function hexToDec($hex) {

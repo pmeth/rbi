@@ -6,9 +6,11 @@
  * @author Peter Meth
  */
 class Rom {
+
 	protected $filename;
 	protected $romBinary;
 	protected $romHex;
+
 	function __construct($filename) {
 		$this->filename = $filename;
 
@@ -16,8 +18,8 @@ class Rom {
 		$this->romBinary = fread($handle, filesize($this->filename));
 		fclose($handle);
 		$this->romHex = bin2hex($this->romBinary);
-
 	}
+
 	public function getFilename() {
 		return $this->filename;
 	}
@@ -34,13 +36,30 @@ class Rom {
 		return substr($this->romHex, $start, $numcharacters);
 	}
 
+	public function setHexString($newhexstring, $start) {
+		$this->romHex = substr_replace($this->romHex, $newhexstring, $start, strlen($newhexstring));
+
+		$this->romBinary = $this->hexToBin($this->romHex);
+	}
+
+	public function save() {
+		$handle = fopen($this->filename, 'w');
+		fwrite($handle, $this->romBinary);
+		fclose($handle);
+	}
+
 	public function setFilename($filename) {
 		$this->filename = $filename;
 	}
 
-	protected function hexToDec($hex) {
+	public function hexToDec($hex) {
 		return base_convert($hex, 16, 10);
 	}
+
+	public function hexToBin($hex) {
+		return pack("H*", $hex);
+	}
+
 }
 
 ?>

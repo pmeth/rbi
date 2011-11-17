@@ -26,12 +26,14 @@ class RBI3Rom extends Rom {
 
 	public function getHitterStart() {
 		return $this->hexToDec($this->hitterStartHex) * 2;
-		;
 	}
 
 	public function getHitterEnd() {
 		return $this->hexToDec($this->hitterEndHex) * 2;
-		;
+	}
+
+	public function getTeams() {
+		return $this->teams;
 	}
 
 	public function getTeamHexToChar() {
@@ -60,8 +62,8 @@ class RBI3Rom extends Rom {
 
 	public function getAllPlayers() {
 		$players = new PlayerCollection();
-		foreach(array('hitter', 'pitcher') as $playertype) {
-			switch($playertype) {
+		foreach (array('hitter', 'pitcher') as $playertype) {
+			switch ($playertype) {
 				case 'hitter':
 					$start = $this->getHitterStart();
 					$end = $this->getHitterEnd();
@@ -77,7 +79,6 @@ class RBI3Rom extends Rom {
 			}
 			for ($offset = $start; $offset < $end; $offset += 36) {
 
-				// TODO: make this less ugly
 				$playeroffset = ($offset - $start) / 36;
 				//$teamoffset = floor($playeroffset / $onEachTeam);
 				$teamoffset = floor($playeroffset / 14);
@@ -86,10 +87,10 @@ class RBI3Rom extends Rom {
 					continue;
 				}
 				$player = new Player($this, $offset);
-				if(!$player->valid()) {
+				if (!$player->valid()) {
 					continue;
 				}
-				$player->setTeam($this->teams[$teamoffset + 1]);
+				//$player->setTeam($this->teams[$teamoffset + 1]);
 				$players->addPlayer($player);
 			}
 		}
@@ -212,7 +213,7 @@ class RBI3Rom extends Rom {
 		$this->nameCharToHex = array_flip($this->nameHexToChar);
 	}
 
-	protected function hexToDec($hex) {
+	public function hexToDec($hex) {
 		return base_convert($hex, 16, 10);
 	}
 

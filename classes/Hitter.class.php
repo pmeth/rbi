@@ -1,6 +1,7 @@
 <?php
 
 class Hitter extends Player {
+
 	protected $bats;
 	protected $position;
 	protected $homeruns;
@@ -9,10 +10,10 @@ class Hitter extends Player {
 	protected $contact;
 	protected $speed;
 
-    public function __construct(Rom $rom, $offset) {
-        parent::__construct($rom, $offset);
+	public function __construct(Rom $rom, $offset) {
+		parent::__construct($rom, $offset);
 
-		if($this->type != 'hitter') {
+		if ($this->type != 'hitter') {
 			throw new Exception('This offset does not represent a hitter');
 		}
 		$this->generateBats();
@@ -22,8 +23,7 @@ class Hitter extends Player {
 		$this->generatePower();
 		$this->generateContact();
 		$this->generateSpeed();
-
-    }
+	}
 
 	public function setHomeruns($newhomeruns) {
 		$this->homeruns = $newhomeruns;
@@ -33,8 +33,27 @@ class Hitter extends Player {
 		return $this->homeruns;
 	}
 
-	public function setBats($newbats) {
-		$this->bats = $newbats;
+	public function setBats($bats) {
+		switch ($bats) {
+			case "S":
+				$lefty = '00';
+				$switchhitter = '01';
+				break;
+			case "R":
+				$lefty = '00';
+				$switchhitter = '00';
+				break;
+			case "L";
+				$lefty = '01';
+				$switchhitter = '00';
+				break;
+			default:
+				throw new Exception('Invalid bats.  Valid options are S, R, L');
+		}
+		$this->playerHex = substr_replace($this->playerHex, $lefty, 14, 2);
+		$this->playerHex = substr_replace($this->playerHex, $switchhitter, 30, 2);
+		$this->bats = $bats;
+
 	}
 
 	public function getBats() {
@@ -111,21 +130,16 @@ class Hitter extends Player {
 
 	public function generatePower() {
 		$this->power = $this->hexToDec(substr($this->playerHex, 24, 2) . substr($this->playerHex, 22, 2));
-
 	}
 
 	public function generateContact() {
 		$this->contact = $this->hexToDec(substr($this->playerHex, 20, 2));
-
 	}
 
 	public function generateSpeed() {
 		$this->speed = $this->hexToDec(substr($this->playerHex, 26, 2));
-
 	}
 
-	public function save() {
-		// to be completed
-	}
+
 }
 
