@@ -25,11 +25,13 @@ class RBI3Rom extends Rom {
 	}
 
 	public function getHitterStart() {
-		return $this->hexToDec($this->hitterStartHex) * 2;;
+		return $this->hexToDec($this->hitterStartHex) * 2;
+		;
 	}
 
 	public function getHitterEnd() {
-		return $this->hexToDec($this->hitterEndHex) * 2;;
+		return $this->hexToDec($this->hitterEndHex) * 2;
+		;
 	}
 
 	public function getTeamHexToChar() {
@@ -58,19 +60,38 @@ class RBI3Rom extends Rom {
 
 	public function getAllPlayers() {
 		$players = new PlayerCollection();
-		for ($offset = $this->getHitterStart(); $offset < $this->getHitterEnd(); $offset += 36) {
-			
-			// TODO: make this less ugly
-			$playeroffset = ($offset - $this->getHitterStart()) / 36;
-			$teamoffset = floor($playeroffset / 14);
-			
-			if($teamoffset == 29 || $teamoffset == 30) {
-				continue;
+		foreach(array('hitter', 'pitcher') as $playertype) {
+			switch($playertype) {
+				case 'hitter':
+					$start = $this->getHitterStart();
+					$end = $this->getHitterEnd();
+					//$onEachTeam = 14;
+					break;
+				case 'pitcher':
+					$start = $this->getPitcherStart();
+					$end = $this->getPitcherEnd();
+					//$onEachTeam = 10;
+					break;
+				default:
+					throw new Exception('invalid playertype');
 			}
-			$player = new Player($this, $offset);
-			$player->setTeam($this->teams[$teamoffset + 1]);
-			$players->addPlayer($player);
-			//return $players;
+			for ($offset = $start; $offset < $end; $offset += 36) {
+
+				// TODO: make this less ugly
+				$playeroffset = ($offset - $start) / 36;
+				//$teamoffset = floor($playeroffset / $onEachTeam);
+				$teamoffset = floor($playeroffset / 14);
+
+				if ($teamoffset == 29 || $teamoffset == 30) {
+					continue;
+				}
+				$player = new Player($this, $offset);
+				if(!$player->valid()) {
+					continue;
+				}
+				$player->setTeam($this->teams[$teamoffset + 1]);
+				$players->addPlayer($player);
+			}
 		}
 		return $players;
 	}

@@ -28,6 +28,10 @@ class Player {
 		$this->generateTeam();
 	}
 
+	public function valid() {
+		return $this->playerHex != "000000000000000000000000000000000000";
+	}
+
 	public function getTeam() {
 		return $this->team;
 	}
