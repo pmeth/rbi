@@ -6,28 +6,21 @@ class Player {
 	protected $name;
 	protected $type;
 	protected $playerHex;
-	protected $nameHexToChar;
-	protected $nameCharToHex;
-
 	protected $converter;
 	protected $lineupNumber;
 	protected $rom;
 	protected $team;
 
-	public function __construct(Rom $rom, $offset) {
+	public function __construct(RBI3Rom $rom, $offset) {
 		$this->rom = $rom;
 		$this->offset = $offset;
-		if ($offset >= $this->hexToDec("16010") * 2 && $offset <= $this->hexToDec("17f90") * 2) {
+		if ($offset >= $rom->getHitterStart() && $offset <= $rom->getHitterEnd()) {
 			$this->type = "hitter";
-		} elseif ($offset >= $this->hexToDec("18010") * 2 && $offset <= $this->hexToDec("19f48") * 2) {
+		} elseif ($offset >= $rom->getPitcherStart() && $offset <= $rom->getPitcherEnd()) {
 			$this->type = "pitcher";
 		} else {
 			throw new Exception('Offset does not map to a player.');
 		}
-
-
-
-		$this->generateNameMappings();
 
 		$this->generatePlayerHex();
 		$this->generateLineupNumber();
@@ -55,77 +48,16 @@ class Player {
 		$this->lineupNumber = $newlineupNumber;
 	}
 
+	public function setTeam($team) {
+		$this->team = $team;
+	}
+
 	public function getType() {
 		return $this->type;
 	}
 
-
-	protected function generateNameMappings() {
-		$this->nameHexToChar = array(
-			 "0a" => "A",
-			 "0b" => "B",
-			 "0c" => "C",
-			 "0d" => "D",
-			 "0e" => "E",
-			 "0f" => "F",
-			 "10" => "G",
-			 "11" => "H",
-			 "12" => "I",
-			 "13" => "J",
-			 "14" => "K",
-			 "15" => "L",
-			 "16" => "M",
-			 "17" => "N",
-			 "18" => "O",
-			 "19" => "P",
-			 "1a" => "Q",
-			 "1b" => "R",
-			 "1c" => "S",
-			 "1d" => "T",
-			 "1e" => "U",
-			 "1f" => "V",
-			 "20" => "W",
-			 "21" => "X",
-			 "22" => "Y",
-			 "23" => "Z",
-			 "24" => " ",
-			 "25" => ".",
-			 "26" => "(",
-			 "27" => "'",
-			 "28" => "a",
-			 "29" => "b",
-			 "2a" => "c",
-			 "2b" => "d",
-			 "2c" => "e",
-			 "2d" => "f",
-			 "2e" => "g",
-			 "2f" => "h",
-			 "30" => "i",
-			 "31" => "j",
-			 "32" => "k",
-			 "33" => "l",
-			 "34" => "m",
-			 "35" => "n",
-			 "36" => "o",
-			 "37" => "p",
-			 "38" => "q",
-			 "39" => "r",
-			 "3a" => "s",
-			 "3b" => "t",
-			 "3c" => "u",
-			 "3d" => "v",
-			 "3e" => "w",
-			 "3f" => "x",
-			 "40" => "y",
-			 "41" => "z",
-		);
-
-		$this->nameCharToHex = array_flip($this->nameHexToChar);
-	}
-
-
 	protected function generateTeam() {
-
+		
 	}
 
 	protected function generatePlayerHex() {
@@ -142,14 +74,17 @@ class Player {
 	}
 
 	protected function generateName() {
-		$this->name = $this->nameHexToChar[substr($this->playerHex, 2, 2)];
-		$this->name .= $this->nameHexToChar[substr($this->playerHex, 4, 2)];
-		$this->name .= $this->nameHexToChar[substr($this->playerHex, 6, 2)];
-		$this->name .= $this->nameHexToChar[substr($this->playerHex, 8, 2)];
-		$this->name .= $this->nameHexToChar[substr($this->playerHex, 10, 2)];
-		$this->name .= $this->nameHexToChar[substr($this->playerHex, 12, 2)];
-		$this->name .= $this->nameHexToChar[substr($this->playerHex, 32, 2)];
-		$this->name .= $this->nameHexToChar[substr($this->playerHex, 34, 2)];
+		//TODO: make this less ugly
+		$lookuptable = $this->rom->getNameHexToChar();
+
+		$this->name = $lookuptable[substr($this->playerHex, 2, 2)];
+		$this->name .= $lookuptable[substr($this->playerHex, 4, 2)];
+		$this->name .= $lookuptable[substr($this->playerHex, 6, 2)];
+		$this->name .= $lookuptable[substr($this->playerHex, 8, 2)];
+		$this->name .= $lookuptable[substr($this->playerHex, 10, 2)];
+		$this->name .= $lookuptable[substr($this->playerHex, 12, 2)];
+		$this->name .= $lookuptable[substr($this->playerHex, 32, 2)];
+		$this->name .= $lookuptable[substr($this->playerHex, 34, 2)];
 	}
 
 	protected function hexToDec($hex) {

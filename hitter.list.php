@@ -8,9 +8,11 @@ include_once('classes/Hitter.class.php');
 include_once('classes/PlayerCollection.class.php');
 
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
-$playerlist = new PlayerCollection();
-$myhitter = new Hitter($myrom, 190444);
-$playerlist->addPlayer($myhitter);
+//$playerlist = new PlayerCollection();
+
+//$myhitter = new Hitter($myrom, 190444);
+//$playerlist->addPlayer($myhitter);
+$playerlist = $myrom->getAllPlayers();
 ?>
 <!DOCTYPE html>
 <html>

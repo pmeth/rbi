@@ -6,7 +6,11 @@
  * @author Peter Meth
  */
 class RBI3AndyBRom extends RBI3Rom {
-	//TODO: fill this in with stuff specific to RBI3AndyB
+
+    function __construct($filename) {
+        parent::__construct($filename);
+    }
+
 }
 
 ?>

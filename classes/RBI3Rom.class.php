@@ -7,29 +7,81 @@
  */
 class RBI3Rom extends Rom {
 
-	//TODO: fill this in with stuff specific to RBI3 (the original, not the AndyB mod)
 	protected $teamHexToChar;
 	protected $teamCharToHex;
 	protected $teams;
+	protected $nameHexToChar;
+	protected $nameCharToHex;
+	protected $hitterStartHex = "16010";
+	protected $hitterEndHex = "17f90";
+	protected $pitcherStartHex = "18010";
+	protected $pitcherEndHex = "19f48";
 
 	function __construct($filename) {
 		parent::__construct($filename);
 		$this->generateTeamMappings();
 		$this->generateTeams();
+		$this->generateNameMappings();
+	}
+
+	public function getHitterStart() {
+		return $this->hexToDec($this->hitterStartHex) * 2;;
+	}
+
+	public function getHitterEnd() {
+		return $this->hexToDec($this->hitterEndHex) * 2;;
+	}
+
+	public function getTeamHexToChar() {
+		return $this->teamHexToChar;
+	}
+
+	public function getTeamCharToHex() {
+		return $this->teamCharToHex;
+	}
+
+	public function getNameHexToChar() {
+		return $this->nameHexToChar;
+	}
+
+	public function getNameCharToHex() {
+		return $this->nameCharToHex;
+	}
+
+	public function getPitcherStart() {
+		return $this->hexToDec($this->pitcherStartHex) * 2;
+	}
+
+	public function getPitcherEnd() {
+		return $this->hexToDec($this->pitcherEndHex) * 2;
+	}
+
+	public function getAllPlayers() {
+		$players = new PlayerCollection();
+		for ($offset = $this->getHitterStart(); $offset < $this->getHitterEnd(); $offset += 36) {
+			
+			// TODO: make this less ugly
+			$playeroffset = ($offset - $this->getHitterStart()) / 36;
+			$teamoffset = floor($playeroffset / 14);
+			
+			if($teamoffset == 29 || $teamoffset == 30) {
+				continue;
+			}
+			$player = new Player($this, $offset);
+			$player->setTeam($this->teams[$teamoffset + 1]);
+			$players->addPlayer($player);
+			//return $players;
+		}
+		return $players;
 	}
 
 	protected function generateTeams() {
+		// TODO: turn the hardcoded values into variables
 		$start = $this->hexToDec("9e1d") * 2;
 		$end = $this->hexToDec("9e5d") * 2;
 		$numcharacters = $end - $start;
 
-		//echo "$start - $end";
 		$newstring = $this->getHexString($start, $numcharacters);
-//		$chunked = chunk_split($newstring, 4, ",");
-//		$teamshex = explode(",", $chunked);
-//
-//		// strip off last entry (it's blank)
-//		unset($teamshex[count($teamshex) - 1]);
 
 		$teamshex = str_split($newstring, 4);
 
@@ -73,6 +125,70 @@ class RBI3Rom extends Rom {
 		);
 
 		$this->teamCharToHex = array_flip($this->teamHexToChar);
+	}
+
+	protected function generateNameMappings() {
+		$this->nameHexToChar = array(
+			 "00" => " ",
+			 "0a" => "A",
+			 "0b" => "B",
+			 "0c" => "C",
+			 "0d" => "D",
+			 "0e" => "E",
+			 "0f" => "F",
+			 "10" => "G",
+			 "11" => "H",
+			 "12" => "I",
+			 "13" => "J",
+			 "14" => "K",
+			 "15" => "L",
+			 "16" => "M",
+			 "17" => "N",
+			 "18" => "O",
+			 "19" => "P",
+			 "1a" => "Q",
+			 "1b" => "R",
+			 "1c" => "S",
+			 "1d" => "T",
+			 "1e" => "U",
+			 "1f" => "V",
+			 "20" => "W",
+			 "21" => "X",
+			 "22" => "Y",
+			 "23" => "Z",
+			 "24" => " ",
+			 "25" => ".",
+			 "26" => "(",
+			 "27" => "'",
+			 "28" => "a",
+			 "29" => "b",
+			 "2a" => "c",
+			 "2b" => "d",
+			 "2c" => "e",
+			 "2d" => "f",
+			 "2e" => "g",
+			 "2f" => "h",
+			 "30" => "i",
+			 "31" => "j",
+			 "32" => "k",
+			 "33" => "l",
+			 "34" => "m",
+			 "35" => "n",
+			 "36" => "o",
+			 "37" => "p",
+			 "38" => "q",
+			 "39" => "r",
+			 "3a" => "s",
+			 "3b" => "t",
+			 "3c" => "u",
+			 "3d" => "v",
+			 "3e" => "w",
+			 "3f" => "x",
+			 "40" => "y",
+			 "41" => "z",
+		);
+
+		$this->nameCharToHex = array_flip($this->nameHexToChar);
 	}
 
 	protected function hexToDec($hex) {
