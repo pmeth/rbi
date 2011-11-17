@@ -71,7 +71,9 @@ class Pitcher extends Player {
 //print_r($eras);
 // now we should have a nice era reference table.  we will be using it in a moment
 	}
-
+	
+	
+	//TODO: update all the setters to actually change the hex.
 	public function getThrows() {
 		return $this->throws;
 	}
