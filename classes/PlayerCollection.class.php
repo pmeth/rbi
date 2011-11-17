@@ -68,7 +68,11 @@ class PlayerCollection implements Countable, Iterator {
 		while($this->valid()) {
 			$player = $this->current();
 			$return .= "
-				<tr>
+				<tr 
+					onclick='window.location=\"player.view.php?offset=" . $player->getOffset() . "\";'
+					onmouseover='this.style.backgroundColor=\"green\"; this.style.cursor=\"pointer\";'
+					onmouseout='this.style.backgroundColor=\"transparent\";'
+				>
 					<td>" . $player->getOffset() . "</td>
 					<td>" . $player->getTeam() . "</td>
 					<td>" . $player->getName() . "</td>

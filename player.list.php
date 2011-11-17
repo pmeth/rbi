@@ -1,15 +1,10 @@
 <?php
-error_reporting(E_ALL);
-include_once('classes/Rom.class.php');
-include_once('classes/RBI3Rom.class.php');
-include_once('classes/RBI3AndyBRom.class.php');
-include_once('classes/Player.class.php');
-include_once('classes/Hitter.class.php');
-include_once('classes/PlayerCollection.class.php');
+
+include('bootstrap.php');
+
 
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
 //$playerlist = new PlayerCollection();
-
 //$myhitter = new Hitter($myrom, 190444);
 //$playerlist->addPlayer($myhitter);
 $playerlist = $myrom->getAllPlayers();
@@ -18,6 +13,14 @@ $playerlist = $myrom->getAllPlayers();
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<style type="text/css">
+			body {
+				font-family: 'Courier New';
+				font-weight: bold;
+				background-color: black;
+				color: white;
+			}
+		</style>
 		<title></title>
 	</head>
 	<body>

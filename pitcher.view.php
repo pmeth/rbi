@@ -1,12 +1,12 @@
 <?php
-include_once('classes/Rom.class.php');
-include_once('classes/RBI3Rom.class.php');
-include_once('classes/RBI3AndyBRom.class.php');
-include_once('classes/Player.class.php');
-include_once('classes/Pitcher.class.php');
+include('bootstrap.php');
 
+if(empty($_GET['offset'])) {
+	die("Sorry, invalid offset. <a href='index.php'>Return to Home</a>");
+}
+$offset = $_GET['offset'];
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
-$mypitcher = new Pitcher($myrom, 206936);
+$mypitcher = new Pitcher($myrom, $offset);
 
 
 $pitcherdetails = '
@@ -33,7 +33,7 @@ echo "<!DOCTYPE html>
 			<title></title>
 		</head>
 		<body>
-			<div class='menu'><a href='index.php'>Return to Home</a></div>
+			<div class='menu'><a href='player.list.php'>Return to List</a></div>
 			$pitcherdetails
 		</body>
 	</html>
