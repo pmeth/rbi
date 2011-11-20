@@ -10,8 +10,12 @@ class Player {
 	protected $lineupNumber;
 	protected $rom;
 	protected $team;
+	protected $error;
+	protected $isValid;
 
 	public function __construct(RBI3Rom $rom, $offset) {
+		$this->isValid = true;
+		$this->error = '';
 		$this->rom = $rom;
 		$this->offset = $offset;
 		if ($offset >= $rom->getHitterStart() && $offset <= $rom->getHitterEnd()) {
@@ -19,7 +23,8 @@ class Player {
 		} elseif ($offset >= $rom->getPitcherStart() && $offset <= $rom->getPitcherEnd()) {
 			$this->type = "pitcher";
 		} else {
-			throw new Exception('Offset does not map to a player.');
+			$this->isValid = false;
+			$this->error .= '<br>Offset does not map to a player';
 		}
 
 		$this->generatePlayerHex();
@@ -29,7 +34,11 @@ class Player {
 	}
 
 	public function valid() {
-		return $this->playerHex != "000000000000000000000000000000000000";
+		return $this->isValid && $this->playerHex != "000000000000000000000000000000000000";
+	}
+
+	public function getError() {
+		return $this->error;
 	}
 
 	public function getTeam() {
@@ -50,6 +59,10 @@ class Player {
 
 	public function setLineupNumber($newlineupNumber) {
 		$this->lineupNumber = $newlineupNumber;
+	}
+
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	public function getType() {

@@ -10,11 +10,14 @@ class Hitter extends Player {
 	protected $contact;
 	protected $speed;
 
+
 	public function __construct(Rom $rom, $offset) {
 		parent::__construct($rom, $offset);
 
+		$this->isValid = true;
 		if ($this->type != 'hitter') {
-			throw new Exception('This offset does not represent a hitter');
+			$this->isValid = false;
+			$this->error .= '<br>This offset does not represent a hitter';
 		}
 		$this->generateBats();
 		$this->generateHomeruns();
@@ -49,7 +52,10 @@ class Hitter extends Player {
 				$switchhitter = '00';
 				break;
 			default:
-				throw new Exception('Invalid bats.  Valid options are S, R, L');
+				$this->isValid = false;
+				$this->error .= 'Invalid bats.  Valid options are S, R, L';
+				$lefty = '00';
+				$switchhitter = '00';
 		}
 		$this->playerHex = substr_replace($this->playerHex, $lefty, 14, 2);
 		$this->playerHex = substr_replace($this->playerHex, $switchhitter, 30, 2);

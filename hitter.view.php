@@ -32,6 +32,7 @@ echo "<!DOCTYPE html>
 		<body>
 			<div class='menu'><a href='player.list.php'>Return to List</a></div>
 			$hitterdetails
+			<a href='hitter.edit.php?offset=" . $myhitter->getOffset() . "'>Edit this player</a>
 		</body>
 	</html>
 ";
