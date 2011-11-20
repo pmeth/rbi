@@ -12,24 +12,44 @@ class RBI3Rom extends Rom {
 	protected $teams;
 	protected $nameHexToChar;
 	protected $nameCharToHex;
-	protected $hitterStartHex = "16010";
-	protected $hitterEndHex = "17f90";
-	protected $pitcherStartHex = "18010";
-	protected $pitcherEndHex = "19f48";
+	protected $hexOffsets;
+	protected $offsets;
+	protected $eratable;
 
 	function __construct($filename) {
 		parent::__construct($filename);
+
+		// technically we don't really need these as hex.  
+		// it just makes it easier to read if you're using a hex editor
+		$this->hexOffsets = array(
+			 'hitterstart' => '16010',
+			 'hitterend' => '17f90',
+			 'pitcherstart' => '18010',
+			 'pitcherend' => '19f48',
+			 'teamstart' => '9e1d',
+			 'teamend' => '9e5d',
+			 'era1start' => '19d88',
+			 'era1end' => '19e94',
+			 'era2start' => '19f48',
+		);
+
+		$this->offsets = array();
+		foreach ($this->hexOffsets as $key => $value) {
+			$this->offsets[$key] = $this->offsetHexToDec($value);
+		}
+		
 		$this->generateTeamMappings();
 		$this->generateTeams();
 		$this->generateNameMappings();
+		$this->generateEraTable();
 	}
 
 	public function getHitterStart() {
-		return $this->hexToDec($this->hitterStartHex) * 2;
+		return $this->offsets['hitterstart'];
 	}
 
 	public function getHitterEnd() {
-		return $this->hexToDec($this->hitterEndHex) * 2;
+		return $this->offsets['hitterend'];
 	}
 
 	public function getTeams() {
@@ -52,12 +72,20 @@ class RBI3Rom extends Rom {
 		return $this->nameCharToHex;
 	}
 
+	public function getEratable() {
+		return $this->eratable;
+	}
+
+	public function setEratable($eratable) {
+		$this->eratable = $eratable;
+	}
+
 	public function getPitcherStart() {
-		return $this->hexToDec($this->pitcherStartHex) * 2;
+		return $this->offsets['pitcherstart'];
 	}
 
 	public function getPitcherEnd() {
-		return $this->hexToDec($this->pitcherEndHex) * 2;
+		return $this->offsets['pitcherend'];
 	}
 
 	public function getAllPlayers() {
@@ -99,8 +127,8 @@ class RBI3Rom extends Rom {
 
 	protected function generateTeams() {
 		// TODO: turn the hardcoded values into variables
-		$start = $this->hexToDec("9e1d") * 2;
-		$end = $this->hexToDec("9e5d") * 2;
+		$start = $this->offsets['teamstart'];
+		$end = $this->offsets['teamend'];
 		$numcharacters = $end - $start;
 
 		$newstring = $this->getHexString($start, $numcharacters);
@@ -213,8 +241,37 @@ class RBI3Rom extends Rom {
 		$this->nameCharToHex = array_flip($this->nameHexToChar);
 	}
 
+	protected function generateEraTable() {
+		$this->eratable = array();
+
+		// first, let's read the era tables
+		// the first table is 19d88 - 19e94
+		$start = $this->offsets['era1start'];
+		$end = $this->offsets['era1end'];
+		$numcharacters = $end - $start;
+
+		$newstring = $this->getHexString($start, $numcharacters);
+		$era1hex = str_split($newstring, 2);
+
+		// the second table starts at 19f10, and has half the number of characters as table 1
+		$start = $this->offsets['era2start'];
+		$numcharacters = round($numcharacters / 2);
+
+		$newstring = $this->getHexString($start, $numcharacters);
+		$era2hex = str_split($newstring, 1);
+
+		// now we combine them together
+		foreach ($era1hex as $key => $value) {
+			$this->eratable[] = substr($value, 0, 1) . "." . substr($value, 1, 1) . $era2hex[$key];
+		}
+	}
+
 	public function hexToDec($hex) {
 		return base_convert($hex, 16, 10);
+	}
+
+	public function offsetHexToDec($hex) {
+		return $this->hexToDec($hex) * 2;
 	}
 
 }

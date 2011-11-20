@@ -9,7 +9,7 @@ class Pitcher extends Player {
 
 	protected $era;
 	protected $throws;
-	protected $eratable;
+
 	protected $sinkerspeed;
 	protected $curvespeed;
 	protected $fastballspeed;
@@ -32,45 +32,7 @@ class Pitcher extends Player {
 		$this->generateSink();
 	}
 
-	protected function generateEraTable() {
-		$this->eratable = array();
-// first, let's read the era tables
-// the first table is 19d88 - 19e94
-		$start = $this->hexToDec("19d88") * 2;
-		$end = $this->hexToDec("19e94") * 2;
-		$numcharacters = $end - $start;
 
-//echo "$start - $end";
-		$newstring = $this->rom->getHexString($start, $numcharacters);
-//		$chunked = chunk_split($newstring, 2, ",");
-//		$era1hex = explode(",", $chunked);
-//
-// strip off last entry (it's blank).  not sure if this is still needed
-//		unset($era1hex[count($era1hex) - 1]);
-		$era1hex = str_split($newstring, 2);
-
-
-// the second table starts at 19f10, and has half the number of characters as table 1
-		$start = $this->hexToDec("19f48") * 2;
-		$numcharacters = round($numcharacters / 2);
-
-		$newstring = $this->rom->getHexString($start, $numcharacters);
-//		$chunked = chunk_split($newstring, 1, ",");
-//		$era2hex = explode(",", $chunked);
-//
-// strip off last entry (it's blank)
-//		unset($era2hex[count($era2hex) - 1]);
-		$era2hex = str_split($newstring, 1);
-
-
-//print_r($era2hex);
-// now we combine them together
-		foreach ($era1hex as $key => $value) {
-			$this->eratable[] = substr($value, 0, 1) . "." . substr($value, 1, 1) . $era2hex[$key];
-		}
-//print_r($eras);
-// now we should have a nice era reference table.  we will be using it in a moment
-	}
 	
 	
 	//TODO: update all the setters to actually change the hex.
@@ -110,9 +72,9 @@ class Pitcher extends Player {
 	}
 
 	protected function generateEra() {
-		$this->generateEraTable();
 		$eraindex = $this->hexToDec(substr($this->playerHex, 16, 2));
-		$this->era = $this->eratable[$eraindex];
+		$eratable = $this->rom->getEratable();
+		$this->era = $eratable[$eraindex];
 	}
 
 	protected function generateSinkerSpeed() {
