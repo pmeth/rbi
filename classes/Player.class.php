@@ -12,9 +12,11 @@ class Player {
 	protected $team;
 	protected $error;
 	protected $isValid;
+	protected $acceptAbnormal;
 
 	public function __construct(RBI3Rom $rom, $offset) {
 		$this->isValid = true;
+		$this->acceptAbnormal = false;
 		$this->error = '';
 		$this->rom = $rom;
 		$this->offset = $offset;
@@ -35,6 +37,14 @@ class Player {
 
 	public function valid() {
 		return $this->isValid && $this->playerHex != "000000000000000000000000000000000000";
+	}
+
+	public function getAcceptAbnormal() {
+		return $this->acceptAbnormal;
+	}
+
+	public function setAcceptAbnormal($acceptAbnormal) {
+		$this->acceptAbnormal = $acceptAbnormal;
 	}
 
 	public function getError() {
@@ -59,6 +69,11 @@ class Player {
 
 	public function setLineupNumber($newlineupNumber) {
 		$this->lineupNumber = $newlineupNumber;
+		if ($newlineupNumber < 0 || $newlineupnumber > 23) {
+			$this->isValid = false;
+			$this->error .= 'Invalid lineup number.  Valid numbers are 0 to 23';
+		}
+		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($newlineupNumber), 0, 2);
 	}
 
 	public function setName($name) {
@@ -115,6 +130,10 @@ class Player {
 
 	protected function hexToDec($hex) {
 		return base_convert($hex, 16, 10);
+	}
+
+	protected function decToHex($dec) {
+		return str_pad(base_convert($dec, 10, 16), 2, "0", STR_PAD_LEFT);
 	}
 
 }

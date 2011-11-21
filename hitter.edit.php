@@ -8,6 +8,8 @@ $offset = $_GET['offset'];
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
 $myhitter = new Hitter($myrom, $offset);
 if (!empty($_POST['submit'])) {
+	// this has to be first for it to do anything
+	$myhitter->setAcceptAbnormal(isset($_POST['acceptabnormal']) && $_POST['acceptabnormal'] == 'true');
 	$myhitter->setName($_POST['name']);
 	$myhitter->setPosition($_POST['pos']);
 	$myhitter->setBats($_POST['bats']);
@@ -40,6 +42,7 @@ $hitterdetails = '
 	Power: <input name="power" type="text" value="' . $myhitter->getPower() . '" /><br />
 	Contact: <input name="contact" type="text" value="' . $myhitter->getContact() . '" /><br />
 	Speed: <input name="speed" type="text" value="' . $myhitter->getSpeed() . '" /><br />
+	Accept Abnormal: <input name="acceptabnormal" type="checkbox" value="true" /><br />
 		<input type="submit" name="submit" value="Save" /><br />
 ';
 
