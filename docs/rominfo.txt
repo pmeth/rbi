@@ -17,7 +17,7 @@ Hitter:
 30-31	bats (part 1)
 
 Pitcher
-14	?
+14	sink
 15	throws
 16-17	era
 18-19	sink speed
@@ -27,4 +27,4 @@ Pitcher
 25	curve right
 26-27	stamina
 28-29	?
-30-31	sink
+30-31	?

@@ -1,6 +1,5 @@
 <?php
 include('bootstrap.php');
-
 if(empty($_GET['offset'])) {
 	die("Sorry, invalid offset. <a href='index.php'>Return to Home</a>");
 }
@@ -35,6 +34,7 @@ echo "<!DOCTYPE html>
 		<body>
 			<div class='menu'><a href='player.list.php'>Return to List</a></div>
 			$pitcherdetails
+			<a href='pitcher.edit.php?offset=" . $mypitcher->getOffset() . "'>Edit this player</a>
 		</body>
 	</html>
 ";

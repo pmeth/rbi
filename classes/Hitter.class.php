@@ -27,7 +27,6 @@ class Hitter extends Player {
 		$this->generateSpeed();
 	}
 
-	//TODO: update all the setters to actually change the hex.
 	public function setHomeruns($homeruns) {
 		$this->homeruns = $homeruns;
 		if ($homeruns < 0 || $homeruns > 99) {

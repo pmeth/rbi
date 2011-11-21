@@ -14,7 +14,8 @@ class RBI3Rom extends Rom {
 	protected $nameCharToHex;
 	protected $hexOffsets;
 	protected $offsets;
-	protected $eratable;
+	protected $eraTable;
+	protected $allPlayersCollection;
 
 	function __construct($filename) {
 		parent::__construct($filename);
@@ -29,7 +30,7 @@ class RBI3Rom extends Rom {
 			 'teamstart' => '9e1d',
 			 'teamend' => '9e5d',
 			 'era1start' => '19d88',
-			 'era1end' => '19e94',
+			 'era1end' => '19e88',
 			 'era2start' => '19f48',
 		);
 
@@ -72,12 +73,24 @@ class RBI3Rom extends Rom {
 		return $this->nameCharToHex;
 	}
 
-	public function getEratable() {
-		return $this->eratable;
+	public function getEraTable() {
+		return $this->eraTable;
 	}
 
 	public function setEratable($eratable) {
-		$this->eratable = $eratable;
+		$this->eraTable = $eratable;
+		
+		//write the new eratable to the binary
+		$era1hex = '';
+		$era2hex = '';
+		foreach($eratable as $key => $era) {
+			$era1hex .= substr($era,0,1) . substr($era,2,1);
+			$era2hex .= substr($era,3,1);
+		}
+		
+		$this->setHexString($era1hex, $this->offsets['era1start']);
+		$this->setHexString($era2hex, $this->offsets['era2start']);
+		//TODO: have a way to reclaim unused era table indexes
 	}
 
 	public function getPitcherStart() {
@@ -89,8 +102,14 @@ class RBI3Rom extends Rom {
 	}
 
 	public function getAllPlayers() {
+		if(isset($this->allPlayersCollection)) {
+			return $this->allPlayersCollection;
+		}
+		
 		$players = new PlayerCollection();
-		foreach (array('hitter', 'pitcher') as $playertype) {
+		//TODO: remove this comment for production
+//		foreach (array('hitter', 'pitcher') as $playertype) {
+		foreach (array('pitcher') as $playertype) {
 			switch ($playertype) {
 				case 'hitter':
 					$start = $this->getHitterStart();
@@ -122,11 +141,11 @@ class RBI3Rom extends Rom {
 				$players->addPlayer($player);
 			}
 		}
+		$this->allPlayersCollection = $players;
 		return $players;
 	}
 
 	protected function generateTeams() {
-		// TODO: turn the hardcoded values into variables
 		$start = $this->offsets['teamstart'];
 		$end = $this->offsets['teamend'];
 		$numcharacters = $end - $start;
@@ -242,7 +261,7 @@ class RBI3Rom extends Rom {
 	}
 
 	protected function generateEraTable() {
-		$this->eratable = array();
+		$this->eraTable = array();
 
 		// first, let's read the era tables
 		// the first table is 19d88 - 19e94
@@ -262,7 +281,7 @@ class RBI3Rom extends Rom {
 
 		// now we combine them together
 		foreach ($era1hex as $key => $value) {
-			$this->eratable[] = substr($value, 0, 1) . "." . substr($value, 1, 1) . $era2hex[$key];
+			$this->eraTable[] = substr($value, 0, 1) . "." . substr($value, 1, 1) . $era2hex[$key];
 		}
 	}
 
