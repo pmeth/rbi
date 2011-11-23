@@ -1,0 +1,28 @@
+Player (32 hex characters):
+
+Common:
+0-1	lineup number
+2-13	name
+
+Hitter:
+14-15 bats
+16-17	average
+18-19	homeruns
+20-21	contact
+22-25	power
+26-27	speed
+28-29	unused
+30-31	unused
+
+Pitcher
+14	sink
+15	throws
+16-17	era
+18-19	sink speed
+20-21	curve speed
+22-23	fastball speed
+24	curve left
+25	curve right
+26-27	stamina
+28-29	?
+30-31	?

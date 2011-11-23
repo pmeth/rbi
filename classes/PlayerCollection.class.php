@@ -61,12 +61,14 @@ class PlayerCollection implements Countable, Iterator {
 				<th>Name</th>
 				<th>Lineup #</th>
 				<th>Type</th>
+				<th>Speed</th>
 			</tr>
 		";
 
 		$this->rewind();
 		while($this->valid()) {
 			$player = $this->current();
+			$speed = $player->getType() == 'hitter' ?  $player->getSpeed() : '';
 			$return .= "
 				<tr 
 					onclick='window.location=\"player.view.php?offset=" . $player->getOffset() . "\";'
@@ -78,6 +80,7 @@ class PlayerCollection implements Countable, Iterator {
 					<td>" . $player->getName() . "</td>
 					<td>" . $player->getLineupNumber() . "</td>
 					<td>" . $player->getType() . "</td>
+					<td>" . $speed . "</td>
 				</tr>
 			";
 			$this->next();

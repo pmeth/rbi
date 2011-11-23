@@ -38,7 +38,7 @@ class RBI3Rom extends Rom {
 		foreach ($this->hexOffsets as $key => $value) {
 			$this->offsets[$key] = $this->offsetHexToDec($value);
 		}
-		
+
 		$this->generateTeamMappings();
 		$this->generateTeams();
 		$this->generateNameMappings();
@@ -79,15 +79,15 @@ class RBI3Rom extends Rom {
 
 	public function setEratable($eratable) {
 		$this->eraTable = $eratable;
-		
+
 		//write the new eratable to the binary
 		$era1hex = '';
 		$era2hex = '';
-		foreach($eratable as $key => $era) {
-			$era1hex .= substr($era,0,1) . substr($era,2,1);
-			$era2hex .= substr($era,3,1);
+		foreach ($eratable as $key => $era) {
+			$era1hex .= substr($era, 0, 1) . substr($era, 2, 1);
+			$era2hex .= substr($era, 3, 1);
 		}
-		
+
 		$this->setHexString($era1hex, $this->offsets['era1start']);
 		$this->setHexString($era2hex, $this->offsets['era2start']);
 		//TODO: have a way to reclaim unused era table indexes
@@ -102,14 +102,12 @@ class RBI3Rom extends Rom {
 	}
 
 	public function getAllPlayers() {
-		if(isset($this->allPlayersCollection)) {
+		if (isset($this->allPlayersCollection)) {
 			return $this->allPlayersCollection;
 		}
-		
+
 		$players = new PlayerCollection();
-		//TODO: remove this comment for production
-//		foreach (array('hitter', 'pitcher') as $playertype) {
-		foreach (array('pitcher') as $playertype) {
+		foreach (array('hitter', 'pitcher') as $playertype) {
 			switch ($playertype) {
 				case 'hitter':
 					$start = $this->getHitterStart();
@@ -133,7 +131,13 @@ class RBI3Rom extends Rom {
 				if ($teamoffset == 29 || $teamoffset == 30) {
 					continue;
 				}
-				$player = new Player($this, $offset);
+//				$player = new Player($this, $offset);
+				if($playertype == 'hitter') {
+					$player = new Hitter($this, $offset);
+				} else {
+					$player = new Pitcher($this, $offset);
+					
+				}
 				if (!$player->valid()) {
 					continue;
 				}
