@@ -87,8 +87,8 @@ foreach ($hextochar as $key => $value) {
 	$chartohex[$value] = strtolower($key);
 }
 
-// now we have 2 arrays.  
-// $character maps hex to char 
+// now we have 2 arrays.
+// $character maps hex to char
 // $hexcode maps char to hex
 
 // open rom for reading
@@ -226,8 +226,8 @@ if ($_POST["playertype"] == "hitter") {
 	} else {
 		// find second occurrence of 0.00.  first occurrence is the real 0.00
 		$erakeys = array_keys($eras, "0.00");
-		$eraindex = $erakeys[1]; 
-		
+		$eraindex = $erakeys[1];
+
 		// insert era into 2 tables
 		// first table (first 2 digits, not including the '.')
 		$neweravalue = chr(hexToDec(substr($_POST["era"],0,1) . substr($_POST["era"],2,1)));
@@ -264,7 +264,7 @@ if ($_POST["playertype"] == "hitter") {
 /*
 Array
 (
-    [playername] => Moyer   
+    [playername] => Moyer
     [throws] => L
     [era] => 6.91
     [speed] => 194
@@ -301,5 +301,3 @@ function hexToDec($hex) {
 	return base_convert($hex, 16, 10);
 }
 
-
-?>

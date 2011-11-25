@@ -25,4 +25,4 @@ spl_autoload_register();
 //include_once('classes/Player.class.php');
 //include_once('classes/Hitter.class.php');
 //include_once('classes/PlayerCollection.class.php');
-?>
+

@@ -76,8 +76,8 @@ foreach ($hextochar as $key => $value) {
 	$chartohex[$value] = strtolower($key);
 }
 
-// now we have 2 arrays.  
-// $character maps hex to char 
+// now we have 2 arrays.
+// $character maps hex to char
 // $hexcode maps char to hex
 
 $start = hexToDec("9e1d") * 2;
@@ -171,8 +171,8 @@ foreach ($hextochar as $key => $value) {
 	$chartohex[$value] = strtolower($key);
 }
 
-// now we have 2 arrays.  
-// $character maps hex to char 
+// now we have 2 arrays.
+// $character maps hex to char
 // $hexcode maps char to hex
 
 $start = $_GET["offset"];
@@ -282,16 +282,16 @@ if ($playertype == "hitter") {
 	// now we should have a nice era reference table.  we will be using it in a moment
 
 	switch (substr($playerhex, 15, 1)) {
-		case 0: 
+		case 0:
 			$throws = "R";
 			break;
-		case 1: 
+		case 1:
 			$throws = "L";
 			break;
-		case 2: 
+		case 2:
 			$throws = "SR";
 			break;
-		case 3: 
+		case 3:
 			$throws = "SL";
 			break;
 	}
@@ -374,4 +374,3 @@ function hexToDec($hex) {
 	return base_convert($hex, 16, 10);
 }
 
-?>

@@ -77,8 +77,8 @@ foreach ($hextochar as $key => $value) {
 	$chartohex[$value] = strtolower($key);
 }
 
-// now we have 2 arrays.  
-// $character maps hex to char 
+// now we have 2 arrays.
+// $character maps hex to char
 // $hexcode maps char to hex
 
 $start = hexToDec("9e1d") * 2;
@@ -263,8 +263,8 @@ foreach ($hextochar as $key => $value) {
 	$chartohex[$value] = strtolower($key);
 }
 
-// now we have 2 arrays.  
-// $character maps hex to char 
+// now we have 2 arrays.
+// $character maps hex to char
 // $hexcode maps char to hex
 
 $start = hexToDec("16010") * 2;
@@ -467,16 +467,16 @@ foreach($playershex as $relativeid => $playerhex) {
 //	echo "$playername, $teamid, $teams[$teamid] <br>";
 
 	switch (substr($playerhex, 15, 1)) {
-		case 0: 
+		case 0:
 			$throws = "R";
 			break;
-		case 1: 
+		case 1:
 			$throws = "L";
 			break;
-		case 2: 
+		case 2:
 			$throws = "SR";
 			break;
-		case 3: 
+		case 3:
 			$throws = "SL";
 			break;
 	}
@@ -615,12 +615,12 @@ $output="
 			<th>
 				<a href='$_SERVER[SCRIPT_NAME]?sortname=position&sortorder=DESC$filterstring'>$downimage</a> Pos
 				<a href='$_SERVER[SCRIPT_NAME]?sortname=position&sortorder=ASC$filterstring'>$upimage</a>
-				
+
 			</th>
 			<th>
 				<a href='$_SERVER[SCRIPT_NAME]?sortname=hand&sortorder=DESC$filterstring'>$downimage</a> Hand
 				<a href='$_SERVER[SCRIPT_NAME]?sortname=hand&sortorder=ASC$filterstring'>$upimage</a>
-				
+
 			</th>
 			<th>
 				<a href='$_SERVER[SCRIPT_NAME]?sortname=average&sortorder=DESC$filterstring'>$downimage</a> AVG
@@ -715,8 +715,8 @@ foreach ($players as $player) {
 when we're ready, add this to the <tr>
 */
 
- 
-		
+
+
 
 	$output .= "
 		<tr
@@ -781,4 +781,3 @@ echo $output;
 function hexToDec($hex) {
 	return base_convert($hex, 16, 10);
 }
-?>

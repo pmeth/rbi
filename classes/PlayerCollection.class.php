@@ -70,7 +70,7 @@ class PlayerCollection implements Countable, Iterator {
 			$player = $this->current();
 			$speed = $player->getType() == 'hitter' ?  $player->getSpeed() : '';
 			$return .= "
-				<tr 
+				<tr
 					onclick='window.location=\"player.view.php?offset=" . $player->getOffset() . "\";'
 					onmouseover='this.style.backgroundColor=\"green\"; this.style.cursor=\"pointer\";'
 					onmouseout='this.style.backgroundColor=\"transparent\";'
@@ -94,4 +94,4 @@ class PlayerCollection implements Countable, Iterator {
 
 }
 
-?>
+

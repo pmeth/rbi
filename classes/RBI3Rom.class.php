@@ -20,7 +20,7 @@ class RBI3Rom extends Rom {
 	function __construct($filename) {
 		parent::__construct($filename);
 
-		// technically we don't really need these as hex.  
+		// technically we don't really need these as hex.
 		// it just makes it easier to read if you're using a hex editor
 		$this->hexOffsets = array(
 			 'hitterstart' => '16010',
@@ -136,7 +136,7 @@ class RBI3Rom extends Rom {
 					$player = new Hitter($this, $offset);
 				} else {
 					$player = new Pitcher($this, $offset);
-					
+
 				}
 				if (!$player->valid()) {
 					continue;
@@ -299,4 +299,4 @@ class RBI3Rom extends Rom {
 
 }
 
-?>
+
