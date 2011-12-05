@@ -4,24 +4,24 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>Uploading files with PHP</title>
 		<style type="text/css">
-			body{
+			body {
 				padding: 0;
 				margin: 0;
 				background: #fff;
 			}
-			h1{
+			h1 {
 				font: bold 16pt Arial, Helvetica, sans-serif;
 				color: #000;
 				text-align: center;
 			}
-			p{
+			p {
 				font: normal 10pt Arial, Helvetica, sans-serif;
 				color: #000;
 			}
-			form{
+			form {
 				display: inline;
 			}
-			#formcontainer{
+			#formcontainer {
 				width: 50%;
 				padding: 10px;
 				margin-left: auto;
@@ -37,7 +37,8 @@
 			<form enctype="multipart/form-data" action="upload_file.php" method="post">
 				<input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
 				<p>File to upload <input name="userfile" type="file" />
-					<input type="submit" name="send" value="Upload File" /></p>
+					<input type="submit" name="send" value="Upload File" />
+				</p>
 			</form>
 		</div>
 	</body>

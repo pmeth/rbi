@@ -18,7 +18,8 @@ class FileUploader {
 	protected $size;
 	protected $error;
 	protected $allowedTypes = array(
-		 'application/octet-stream'
+		 'application/octet-stream',
+		 'text/plain',
 	);
 
 	public function __construct($uploadDir='../uploads/') {
