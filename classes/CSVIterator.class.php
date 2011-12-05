@@ -10,19 +10,31 @@ class CSVIterator implements Iterator {
 	private $currentElement;
 	private $rowCounter;
 	private $delimiter;
+	private $withheadings;
+	private $headings = array();
 
-	public function __construct($file, $withheadings = false, $delimiter = ',') {
+	public function __construct($file, $withheadings = true, $delimiter = ',') {
 		$this->filePointer = fopen($file, 'r');
 		$this->delimiter = $delimiter;
+		$this->withheadings = $withheadings;
+		if ($this->withheadings) {
+			$this->headings = fgetcsv($this->filePointer, self::ROW_SIZE, $this->delimiter);
+		}
 	}
 
 	public function rewind() {
 		$this->rowCounter = 0;
 		rewind($this->filePointer);
+		if ($this->withheadings) { // skip over the headings
+			fgetcsv($this->filePointer, self::ROW_SIZE, $this->delimiter);
+		}
 	}
 
 	public function current() {
 		$this->currentElement = fgetcsv($this->filePointer, self::ROW_SIZE, $this->delimiter);
+		if ($this->withheadings) {
+			$this->currentElement = array_combine($this->headings, $this->currentElement);
+		}
 		$this->rowCounter++;
 		return $this->currentElement;
 	}
