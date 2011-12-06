@@ -100,6 +100,16 @@ class RBI3Rom extends Rom {
 	public function getPitcherEnd() {
 		return $this->offsets['pitcherend'];
 	}
+	
+	public function getPlayersByTeam($team) {
+		$players = new PlayerCollection();
+		foreach($this->getAllPlayers() as $player) {
+			if($player->getTeam() == $team) {
+				$players->addPlayer($player);
+			}
+		}
+		return $players;
+	}
 
 	public function getAllPlayers() {
 		if (isset($this->allPlayersCollection)) {

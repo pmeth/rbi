@@ -28,7 +28,7 @@ $teamlist = $myrom->getTeams();
 			<?php
 			foreach ($teamlist as $id => $team) {
 
-				echo "<li>$id => $team</li>";
+				echo "<li><a href='player.list.php?team=$team'>$id => $team</a></li>";
 			}
 			?>
 		</ul>
