@@ -15,11 +15,17 @@ class FileUploader {
 	protected $name;
 	protected $tmp_name;
 	protected $type;
+	protected $extension;
 	protected $size;
 	protected $error;
 	protected $allowedTypes = array(
 		 'application/octet-stream',
 		 'text/plain',
+	);
+	protected $allowedExtensions = array(
+		 'rom',
+		 'nes',
+		 'csv',
 	);
 
 	public function __construct($uploadDir='../uploads/') {
@@ -35,6 +41,13 @@ class FileUploader {
 		if (!in_array($this->type, $this->allowedTypes)) {
 			throw new Exception('Invalid MIME type of target file. Tried to upload ' . $this->type);
 		}
+
+		$path_parts = pathinfo($this->name);
+		$this->extension = isset($path_parts['extension']) ? $path_parts['extension'] : '';
+		if (!in_array($this->extension, $this->allowedExtensions)) {
+			throw new Exception('Invalid File Extension. Tried to upload ' . $this->extension);
+		}
+		
 		$this->uploadFile = $uploadDir . basename($this->name);
 	}
 
@@ -68,6 +81,43 @@ class FileUploader {
 				break;
 		}
 	}
+
+	public function getUploadFile() {
+		return $this->uploadFile;
+	}
+
+	public function getName() {
+		return $this->name;
+	}
+
+	public function getTmp_name() {
+		return $this->tmp_name;
+	}
+
+	public function getType() {
+		return $this->type;
+	}
+
+	public function getExtension() {
+		return $this->extension;
+	}
+
+	public function getSize() {
+		return $this->size;
+	}
+
+	public function getError() {
+		return $this->error;
+	}
+
+	public function getAllowedTypes() {
+		return $this->allowedTypes;
+	}
+
+	public function getAllowedExtensions() {
+		return $this->allowedExtensions;
+	}
+
 
 }
 

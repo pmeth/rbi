@@ -8,6 +8,7 @@
 		<ul>
 			<li><a href='player.list.php'>View Player List</a></li>
 			<li><a href='team.list.php'>View Team List</a></li>
+			<li><a href='upload_form.php'>Upload a file</a></li>
 
 		</ul>
 	</body>
