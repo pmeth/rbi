@@ -53,5 +53,17 @@ class Person {
 		$this->_lastName = $lastName;
 	}
 
+	public function validateNew() {
+		if (!empty($this->id)) {
+			return array(false, 'This user already exists');
+		}
+
+		if ($this->_usernameExists($this->_username)) {
+			return array(false, 'Username is in use');
+		}
+
+		return $this->_person->validateNew();
+	}
+
 }
 
