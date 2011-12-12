@@ -28,22 +28,38 @@ $teamlist = $myrom->getTeams();
 				background-color: black;
 				color: white;
 			}
+
+			header, menu {
+				margin: 0;
+				padding: 0;
+			}
+			header a, menu a {
+				color: yellow;
+				text-decoration: none;
+			}
+
+			header a:hover, menu a:hover {
+				text-decoration: underline;
+			}
 		</style>
 		<title></title>
 	</head>
 	<body>
+		<?php
+		include('partials/header.partial.php');
+		include('partials/menu.partial.php');
+		?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" >
 			Team: 
 			<select name="team">
 				<?php
-				foreach($teamlist as $team){
+				foreach ($teamlist as $team) {
 					$selected = "";
-					if($filteredteam == $team) {
+					if ($filteredteam == $team) {
 						$selected = "selected='selected'";
 					}
 					echo "<option value='$team' $selected>$team</option>";
 				}
-				
 				?>
 			</select>
 			<input type="submit" value="FILTER" />
