@@ -1,5 +1,4 @@
 <?php
-
 include('bootstrap.php');
 
 $user = new User($db, $request->getPostVar('username'), $request->getPostVar('password'));
