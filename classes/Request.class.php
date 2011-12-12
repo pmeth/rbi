@@ -15,12 +15,21 @@ class Request {
 	protected $getVars = array();
 	protected $postVars = array();
 	protected $sessionVars = array();
+	protected $cookieVars = array();
 
 	public function __construct() {
 		session_start();
 		$this->getVars = !empty($_GET) ? $_GET : array();
 		$this->postVars = !empty($_POST) ? $_POST : array();
 		$this->sessionVars = !empty($_SESSION) ? $_SESSION : array();
+		$this->cookieVars = !empty($_COOKIE) ? $_COOKIE : array();
+		
+		// undo the effects of magic_quotes
+		if (get_magic_quotes_gpc()) {
+			$this->postVars = stripslashes($this->postVars);
+			$this->getVars = stripslashes($this->getVars);
+			$this->cookieVars = stripslashes($this->cookieVars);
+		}
 	}
 
 	public function getGetVars() {
@@ -28,6 +37,7 @@ class Request {
 	}
 
 	public function getPostVars() {
+		
 		return $this->postVars;
 	}
 

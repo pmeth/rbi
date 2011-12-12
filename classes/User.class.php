@@ -185,7 +185,7 @@ class User implements Serializable {
 	}
 
 	protected function _hashpass($password, $salt) {
-		return md5($password . md5($this->_salt));
+		return md5(md5($password) . md5($this->_salt));
 	}
 
 	public function getId() {
