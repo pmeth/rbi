@@ -10,7 +10,7 @@
  *
  * @author Peter Meth
  */
-class User {
+class User implements Serializable {
 	const USERNAME_MIN_LENGTH = 3;
 	protected $_db;
 	protected $_table = 'users';
@@ -42,6 +42,36 @@ class User {
 		} else {
 			$this->_loggedIn = false;
 		}
+	}
+
+	public function serialize() {
+		$data = array(
+			 '_id' => $this->_id,
+			 '_loggedIn' => $this->_loggedIn,
+			 '_salt' => $this->_salt,
+			 '_username' => $this->_username,
+			 '_passwordhash' => $this->_passwordhash,
+			 '_error' => $this->_error,
+		);
+		return serialize($data);
+	}
+
+	public function unserialize($serialized) {
+		// a little safety precaution
+		if (!isset($this->_db)) {
+			return null;
+		}
+		
+		$data = unserialize($serialized);
+		$this->_id = $data['_id'];
+		$this->_person = new Person($this->_db, $this->_getPersonId());
+		$this->_loggedIn = $data['_loggedIn'];
+		$this->_salt = $data['_salt'];
+		$this->_username = $data['_username'];
+		$this->_passwordhash = $data['_passwordhash'];
+		$this->_error = $data['_error'];
+
+		return $this;
 	}
 
 	public function getLoggedIn() {
@@ -165,7 +195,7 @@ class User {
 	protected function _generateSalt() {
 		return substr(sha1(rand(332, 1784) * 85), 8, 19);
 	}
-	
+
 	public function delete() {
 		$query = 'DELETE FROM ' . $this->_table . ' WHERE id=:id';
 		$params = array(':id' => $this->_id);
@@ -178,6 +208,9 @@ class User {
 		$this->_loggedIn = false;
 	}
 
+	public function getUsername() {
+		return $this->_username;
+	}
 
 }
 

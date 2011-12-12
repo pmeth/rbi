@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<menu><a href="index.php">Return home</a></menu>
 		<?php
+		include('partials/menu.partial.php');
 		include('bootstrap.php');
 
 		if (
@@ -12,7 +12,6 @@
 				  $request->getPostVar('username') != '' &&
 				  $request->getPostVar('password') != ''
 		) {
-			echo "Creating a new user<br />";
 			$newperson = new Person($db, null);
 			$newperson->setFirstName($request->getPostVar('first_name'));
 			$newperson->setLastName($request->getPostVar('last_name'));
@@ -24,9 +23,9 @@
 				$newuser = new User($db, $request->getPostVar('username'), $request->getPostVar('password'));
 				$newuser->setPerson($newperson);
 				if ($newuser->validateNew()) {
-					echo "Ok for new<br />";
 					$newuser->save();
-					echo "New user saved with id " . $newuser->getId();
+					header('Location: index.php');
+					exit;
 				} else {
 					echo "There was a problem adding the user. Message: " . $newuser->getError() . "<br />";
 					// if user failed, we also should remove the Person to avoid making them an orphan.  what would the pro-lifers say??
@@ -34,7 +33,7 @@
 					echo "Person deleted<br />";
 				}
 			} else {
-					echo "There was a problem adding the person. Message: " . $newperson->getError() . "<br />";
+				echo "There was a problem adding the person. Message: " . $newperson->getError() . "<br />";
 			}
 		}
 		?>

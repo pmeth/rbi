@@ -14,10 +14,13 @@ class Request {
 
 	protected $getVars = array();
 	protected $postVars = array();
+	protected $sessionVars = array();
 
 	public function __construct() {
+		session_start();
 		$this->getVars = !empty($_GET) ? $_GET : array();
 		$this->postVars = !empty($_POST) ? $_POST : array();
+		$this->sessionVars = !empty($_SESSION) ? $_SESSION : array();
 	}
 
 	public function getGetVars() {
@@ -28,20 +31,47 @@ class Request {
 		return $this->postVars;
 	}
 
-	public function getPostVar($index){
-		if(isset($this->postVars[$index])) {
+	public function getSessionVars() {
+		return $this->sessionVars;
+	}
+
+	public function getPostVar($index) {
+		if (isset($this->postVars[$index])) {
 			return $this->postVars[$index];
 		} else {
 			return false;
 		}
 	}
-	public function getGetVar($index){
-		if(isset($this->getVars[$index])) {
+
+	public function getGetVar($index) {
+		if (isset($this->getVars[$index])) {
 			return $this->getVars[$index];
 		} else {
 			return false;
 		}
 	}
+
+	public function getSessionVar($index) {
+
+		if (isset($this->sessionVars[$index])) {
+			return $this->sessionVars[$index];
+		} else {
+			return false;
+		}
+	}
+
+	public function setSessionVar($index, $value) {
+		$_SESSION[$index] = $value;
+		$this->sessionVars[$index] = $value;
+	}
+
+	public function unsetSessionVar($index) {
+		if(isset($_SESSION[$index])) {
+			unset($_SESSION[$index]);
+			unset($this->sessionVars[$index]);
+		}
+	}
+
 }
 
 ?>

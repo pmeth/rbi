@@ -10,7 +10,7 @@
  *
  * @author Peter Meth
  */
-class Person {
+class Person  implements Serializable {
 
 	protected $_db;
 	protected $_table = 'persons';
@@ -47,6 +47,28 @@ class Person {
 		} else {
 			$this->_valid = false;
 		}
+	}
+
+	public function serialize() {
+		$data = array(
+			 '_id' => $this->_id,
+			 '_firstName' => $this->_firstName,
+			 '_lastName' => $this->_lastName,
+			 '_email' => $this->_email,
+			 '_valid' => $this->_valid,
+			 '_error' => $this->_error,
+		);
+		return serialize($data);
+	}
+
+	public function unserialize($serialized) {
+		$this->_id = $serialized['_id'];
+		$this->_firstName = $serialized['_firstName'];
+		$this->_lastName = $serialized['_lastName'];
+		$this->_email = $serialized['_email'];
+		$this->_valid = $serialized['_valid'];
+		$this->_error = $serialized['_error'];
+		return $this;
 	}
 
 	public function getValid() {
