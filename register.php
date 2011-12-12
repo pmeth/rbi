@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>Register</title>
+	</head>
 	<body>
 		<?php
 		include('partials/menu.partial.php');
