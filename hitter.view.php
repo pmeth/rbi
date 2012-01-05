@@ -5,7 +5,8 @@ if(empty($_GET['offset'])) {
 }
 $offset = $_GET['offset'];
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
-$myhitter = new Hitter($myrom, $offset);
+$mapper = new HitterROMMapper($myrom);
+$myhitter = $mapper->get($offset);
 
 
 $hitterdetails = '

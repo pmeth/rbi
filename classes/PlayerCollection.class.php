@@ -68,7 +68,7 @@ class PlayerCollection implements Countable, Iterator {
 		$this->rewind();
 		while($this->valid()) {
 			$player = $this->current();
-			$speed = $player->getType() == 'hitter' ?  $player->getSpeed() : '';
+			$speed = $player->getType() == 'Hitter' ?  $player->getSpeed() : '';
 			$return .= "
 				<tr
 					onclick='window.location=\"player.view.php?offset=" . $player->getOffset() . "\";'

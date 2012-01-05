@@ -3,16 +3,17 @@ include('bootstrap.php');
 
 
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
+$playermapper = new PlayerROMMapper($myrom);
 //$playerlist = new PlayerCollection();
 //$myhitter = new Hitter($myrom, 190444);
 //$playerlist->addPlayer($myhitter);
 
 if (isset($_GET['team'])) {
 	$filteredteam = $_GET['team'];
-	$playerlist = $myrom->getPlayersByTeam($filteredteam);
+	$playerlist = $playermapper->getPlayersByTeam($filteredteam);
 } else {
 	$filteredteam = '';
-	$playerlist = $myrom->getAllPlayers();
+	$playerlist = $playermapper->getAllPlayers();
 }
 
 $teamlist = $myrom->getTeams();

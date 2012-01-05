@@ -101,63 +101,6 @@ class RBI3Rom extends Rom {
 		return $this->offsets['pitcherend'];
 	}
 	
-	public function getPlayersByTeam($team) {
-		$players = new PlayerCollection();
-		foreach($this->getAllPlayers() as $player) {
-			if($player->getTeam() == $team) {
-				$players->addPlayer($player);
-			}
-		}
-		return $players;
-	}
-
-	public function getAllPlayers() {
-		if (isset($this->allPlayersCollection)) {
-			return $this->allPlayersCollection;
-		}
-
-		$players = new PlayerCollection();
-		foreach (array('hitter', 'pitcher') as $playertype) {
-			switch ($playertype) {
-				case 'hitter':
-					$start = $this->getHitterStart();
-					$end = $this->getHitterEnd();
-					//$onEachTeam = 14;
-					break;
-				case 'pitcher':
-					$start = $this->getPitcherStart();
-					$end = $this->getPitcherEnd();
-					//$onEachTeam = 10;
-					break;
-				default:
-					throw new Exception('invalid playertype');
-			}
-			for ($offset = $start; $offset < $end; $offset += 36) {
-
-				$playeroffset = ($offset - $start) / 36;
-				//$teamoffset = floor($playeroffset / $onEachTeam);
-				$teamoffset = floor($playeroffset / 14);
-
-				if ($teamoffset == 29 || $teamoffset == 30) {
-					continue;
-				}
-//				$player = new Player($this, $offset);
-				if($playertype == 'hitter') {
-					$player = new Hitter($this, $offset);
-				} else {
-					$player = new Pitcher($this, $offset);
-
-				}
-				if (!$player->valid()) {
-					continue;
-				}
-				//$player->setTeam($this->teams[$teamoffset + 1]);
-				$players->addPlayer($player);
-			}
-		}
-		$this->allPlayersCollection = $players;
-		return $players;
-	}
 
 	protected function generateTeams() {
 		$start = $this->offsets['teamstart'];

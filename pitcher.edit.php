@@ -6,7 +6,9 @@ if (empty($_GET['offset'])) {
 }
 $offset = $_GET['offset'];
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
-$mypitcher = new Pitcher($myrom, $offset);
+$mapper = new PitcherROMMapper($myrom);
+$mypitcher = $mapper->get($offset);
+
 if (!empty($_POST['submit'])) {
 	// this has to be first for it to do anything
 	$mypitcher->setAcceptAbnormal(isset($_POST['acceptabnormal']) && $_POST['acceptabnormal'] == 'true');

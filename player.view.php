@@ -6,9 +6,11 @@ if(empty($_GET['offset'])) {
 }
 $offset = $_GET['offset'];
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
+$mapper = new PlayerROMMapper($myrom);
+
 try {
-	$player = new Player($myrom, $offset);
-	header("Location: " . $player->getType() . ".view.php?offset=$offset");
+	$player = $mapper->get($offset);
+	header("Location: " . strtolower($player->getType()) . ".view.php?offset=$offset");
 	exit;
 } catch (Exception $e) {
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
