@@ -22,10 +22,6 @@ class Player {
 		$this->acceptAbnormal = $acceptAbnormal;
 	}
 
-	public function getError() {
-		return $this->error;
-	}
-
 	public function getTeam() {
 		return $this->team;
 	}
