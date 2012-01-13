@@ -10,12 +10,12 @@ $teammapper = new TeamROMMapper($myrom);
 //$myhitter = new Hitter($myrom, 190444);
 //$playerlist->addPlayer($myhitter);
 
-if (isset($_GET['teamoffset'])) {
-	$filteredteam = $teammapper->get($_GET['teamoffset']);
-	$playerlist = $playermapper->getPlayersByTeam($filteredteam);
-} else {
+if (false === $request->getGetVar('teamoffset')) {
 	$filteredteam = null;
 	$playerlist = $playermapper->getAllPlayers();
+} else {
+	$filteredteam = $teammapper->get($request->getGetVar('teamoffset'));
+	$playerlist = $playermapper->getPlayersByTeam($filteredteam);
 }
 
 
