@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of PlayerROMMapper
  *
@@ -32,12 +27,13 @@ class PlayerROMMapper extends BaseROMMapper {
 			
 			$player->setLineupNumber($this->getLineupNumberFromHex($playerhex));
 			$player->setName($this->getNameFromHex($playerhex));
-			$player->setTeam($this->getTeamFromOffset($offset));
+			$teammapper = new TeamROMMapper($this->rom);
+			$player->setTeam($teammapper->get($this->getTeamOffset($offset)));
 			return $player;
 		}
 	}
 
-	protected function getTeamFromOffset($offset) {
+	protected function getTeamOffset($offset) {
 		if ($offset >= $this->rom->getHitterStart() && $offset <= $this->rom->getHitterEnd()) {
 			// this must be a hitter
 			$start = $this->rom->getHitterStart();
@@ -45,9 +41,8 @@ class PlayerROMMapper extends BaseROMMapper {
 			$start = $this->rom->getPitcherStart();
 		}
 		$playeroffset = ($offset - $start) / $this->offsetSize;
-		$teamoffset = floor($playeroffset / 14);
-		$teams = $this->rom->getTeams();
-		return $teams[$teamoffset + 1];
+		$teamoffset = floor($playeroffset / 14) + 1;
+		return $teamoffset;
 	}
 
 	protected function getPlayerHex($offset) {
@@ -95,7 +90,7 @@ class PlayerROMMapper extends BaseROMMapper {
 	public function getPlayersByTeam($team) {
 		$players = new PlayerCollection();
 		foreach ($this->getAllPlayers() as $player) {
-			if ($player->getTeam() == $team) {
+			if ($player->getTeam()->getOffset() == $team->getOffset()) {
 				$players->addPlayer($player);
 			}
 		}

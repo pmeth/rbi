@@ -3,10 +3,9 @@ include('bootstrap.php');
 
 
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
-//$playerlist = new PlayerCollection();
-//$myhitter = new Hitter($myrom, 190444);
-//$playerlist->addPlayer($myhitter);
-$teamlist = $myrom->getTeams();
+$teammapper = new TeamROMMapper($myrom);
+
+$teamlist = $teammapper->getAllTeams();
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,18 +18,29 @@ $teamlist = $myrom->getTeams();
 				background-color: black;
 				color: white;
 			}
+
+			header, menu {
+				margin: 0;
+				padding: 0;
+			}
+			header a, menu a {
+				color: yellow;
+				text-decoration: none;
+			}
+
+			header a:hover, menu a:hover {
+				text-decoration: underline;
+			}
 		</style>
 		<title></title>
 	</head>
 	<body>
-		<ul>
-
-			<?php
-			foreach ($teamlist as $id => $team) {
-
-				echo "<li><a href='player.list.php?team=$team'>$id => $team</a></li>";
-			}
-			?>
-		</ul>
+		<?php
+		include('partials/header.partial.php');
+		include('partials/menu.partial.php');
+		?>
+		<?php
+		echo $teamlist->toHTMLTable();
+		?>
 	</body>
 </html>

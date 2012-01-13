@@ -76,7 +76,7 @@ class PlayerCollection implements Countable, Iterator {
 					onmouseout='this.style.backgroundColor=\"transparent\";'
 				>
 					<td>" . $player->getOffset() . "</td>
-					<td>" . $player->getTeam() . "</td>
+					<td>" . $player->getTeam()->getName() . "</td>
 					<td>" . $player->getName() . "</td>
 					<td>" . $player->getLineupNumber() . "</td>
 					<td>" . $player->getType() . "</td>

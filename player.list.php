@@ -4,19 +4,22 @@ include('bootstrap.php');
 
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
 $playermapper = new PlayerROMMapper($myrom);
+$teammapper = new TeamROMMapper($myrom);
+
 //$playerlist = new PlayerCollection();
 //$myhitter = new Hitter($myrom, 190444);
 //$playerlist->addPlayer($myhitter);
 
-if (isset($_GET['team'])) {
-	$filteredteam = $_GET['team'];
+if (isset($_GET['teamoffset'])) {
+	$filteredteam = $teammapper->get($_GET['teamoffset']);
 	$playerlist = $playermapper->getPlayersByTeam($filteredteam);
 } else {
-	$filteredteam = '';
+	$filteredteam = null;
 	$playerlist = $playermapper->getAllPlayers();
 }
 
-$teamlist = $myrom->getTeams();
+
+$teamlist = $teammapper->getAllTeams();
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,16 +55,12 @@ $teamlist = $myrom->getTeams();
 		?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" >
 			Team: 
-			<select name="team">
-				<?php
-				foreach ($teamlist as $team) {
-					$selected = "";
-					if ($filteredteam == $team) {
-						$selected = "selected='selected'";
-					}
-					echo "<option value='$team' $selected>$team</option>";
-				}
-				?>
+			<select name="teamoffset">
+				<option value="">All Teams</option>
+				<?php foreach ($teamlist as $team) : ?>
+
+				<option value='<?php echo $team->getOffset(); ?>' <?php if (is_object($filteredteam) && $filteredteam->getOffset() == $team->getOffset()) { echo "selected='selected'"; } ?> ><?php echo $team->getName(); ?></option>
+				<?php endforeach; ?>
 			</select>
 			<input type="submit" value="FILTER" />
 		</form>	

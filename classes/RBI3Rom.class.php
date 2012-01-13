@@ -9,7 +9,6 @@ class RBI3Rom extends Rom {
 
 	protected $teamHexToChar;
 	protected $teamCharToHex;
-	protected $teams;
 	protected $nameHexToChar;
 	protected $nameCharToHex;
 	protected $hexOffsets;
@@ -40,7 +39,6 @@ class RBI3Rom extends Rom {
 		}
 
 		$this->generateTeamMappings();
-		$this->generateTeams();
 		$this->generateNameMappings();
 		$this->generateEraTable();
 	}
@@ -53,8 +51,12 @@ class RBI3Rom extends Rom {
 		return $this->offsets['hitterend'];
 	}
 
-	public function getTeams() {
-		return $this->teams;
+	public function getTeamStart() {
+		return $this->offsets['teamstart'];
+	}
+	
+	public function getTeamEnd() {
+		return $this->offsets['teamend'];
 	}
 
 	public function getTeamHexToChar() {
@@ -99,25 +101,6 @@ class RBI3Rom extends Rom {
 
 	public function getPitcherEnd() {
 		return $this->offsets['pitcherend'];
-	}
-	
-
-	protected function generateTeams() {
-		$start = $this->offsets['teamstart'];
-		$end = $this->offsets['teamend'];
-		$numcharacters = $end - $start;
-
-		$newstring = $this->getHexString($start, $numcharacters);
-
-		$teamshex = str_split($newstring, 4);
-
-		// remove teams 30 & 31, they're not used
-		unset($teamshex[29]);
-		unset($teamshex[30]);
-
-		foreach ($teamshex as $teamnum => $teamhex) {
-			$this->teams[$teamnum + 1] = $this->teamHexToChar[substr($teamhex, 0, 2)] . $this->teamHexToChar[substr($teamhex, 2, 2)];
-		}
 	}
 
 	protected function generateTeamMappings() {
@@ -251,5 +234,4 @@ class RBI3Rom extends Rom {
 	}
 
 }
-
 

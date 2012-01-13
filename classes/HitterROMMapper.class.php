@@ -25,7 +25,8 @@ class HitterROMMapper extends PlayerROMMapper {
 			// these 3 lines are repetitious from the player version of get()
 			$player->setLineupNumber($this->getLineupNumberFromHex($playerhex));
 			$player->setName($this->getNameFromHex($playerhex));
-			$player->setTeam($this->getTeamFromOffset($offset));
+			$teammapper = new TeamROMMapper($this->rom);
+			$player->setTeam($teammapper->get($this->getTeamOffset($offset)));
 
 			$player->setAverage($this->getAverageFromHex($playerhex));
 			$player->setBats($this->getBatsFromHex($playerhex));
