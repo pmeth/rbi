@@ -1,11 +1,10 @@
 <?php
 include('bootstrap.php');
 
-
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
 $teammapper = new TeamROMMapper($myrom);
 
 $teamlist = $teammapper->getAllTeams();
+
 ?>
 <!DOCTYPE html>
 <html>

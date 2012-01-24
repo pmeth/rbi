@@ -4,15 +4,15 @@ include('bootstrap.php');
 if (empty($_GET['offset'])) {
 	die("Sorry, invalid offset. <a href='index.php'>Return to Home</a>");
 }
-$offset = $_GET['offset'];
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
+
 $mapper = new HitterROMMapper($myrom);
 $myhitter = $mapper->get($offset);
+
 if (!empty($_POST['submit'])) {
 	// this has to be first for it to do anything
 	$myhitter->setAcceptAbnormal(isset($_POST['acceptabnormal']) && $_POST['acceptabnormal'] == 'true');
 	$myhitter->setName($_POST['name']);
-	
+
 	$myhitter->setPosition($_POST['pos']);
 	$myhitter->setBats($_POST['bats']);
 	$myhitter->setAverage($_POST['avg']);

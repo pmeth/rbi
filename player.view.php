@@ -5,8 +5,9 @@ if(empty($_GET['offset'])) {
 	die("Sorry, invalid offset. <a href='index.php'>Return to Home</a>");
 }
 $offset = $_GET['offset'];
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
+
 $mapper = new PlayerROMMapper($myrom);
+
 
 try {
 	$player = $mapper->get($offset);

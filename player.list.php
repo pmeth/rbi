@@ -2,13 +2,8 @@
 include('bootstrap.php');
 
 
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
 $playermapper = new PlayerROMMapper($myrom);
 $teammapper = new TeamROMMapper($myrom);
-
-//$playerlist = new PlayerCollection();
-//$myhitter = new Hitter($myrom, 190444);
-//$playerlist->addPlayer($myhitter);
 
 if (false === $request->getGetVar('teamoffset')) {
 	$filteredteam = null;
@@ -54,6 +49,7 @@ $teamlist = $teammapper->getAllTeams();
 		include('partials/menu.partial.php');
 		?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" >
+
 			Team: 
 			<select name="teamoffset">
 				<option value="">All Teams</option>
@@ -61,9 +57,10 @@ $teamlist = $teammapper->getAllTeams();
 
 				<option value='<?php echo $team->getOffset(); ?>' <?php if (is_object($filteredteam) && $filteredteam->getOffset() == $team->getOffset()) { echo "selected='selected'"; } ?> ><?php echo $team->getName(); ?></option>
 				<?php endforeach; ?>
+
 			</select>
 			<input type="submit" value="FILTER" />
-		</form>	
+		</form>
 		<?php
 		echo $playerlist->toHTMLTable();
 		?>

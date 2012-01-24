@@ -5,7 +5,7 @@ if (empty($_GET['offset'])) {
 	die("Sorry, invalid offset. <a href='index.php'>Return to Home</a>");
 }
 $offset = $_GET['offset'];
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
+
 $mapper = new PitcherROMMapper($myrom);
 $mypitcher = $mapper->get($offset);
 
@@ -13,7 +13,7 @@ if (!empty($_POST['submit'])) {
 	// this has to be first for it to do anything
 	$mypitcher->setAcceptAbnormal(isset($_POST['acceptabnormal']) && $_POST['acceptabnormal'] == 'true');
 	$mypitcher->setName($_POST['name']);
-	
+
 	$mypitcher->setEra($_POST['era']);
 	$mypitcher->setThrows($_POST['throws']);
 	$mypitcher->setSinkerspeed($_POST['sinkspeed']);

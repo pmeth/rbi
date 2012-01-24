@@ -14,7 +14,13 @@ $request = new Request();
 
 $user = new User($db, null, null);
 $serialized_user = $request->getSessionVar('user');
-if($serialized_user) {
+if ($serialized_user) {
 	// note: if i do unserialize($serialized_user) instead, it will be an incomplete class.
 	$user->unserialize($serialized_user);
+}
+
+try {
+	$myrom = new RBI3AndyBRom("../rbi2008.nes");
+} catch (Exception $e) {
+	die('An error occurred.  Here are the details: ' . $e->getMessage());
 }
