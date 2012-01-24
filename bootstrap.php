@@ -14,9 +14,14 @@ $request = new Request();
 
 $user = new User($db, null, null);
 $serialized_user = $request->getSessionVar('user');
-if($serialized_user) {
+if ($serialized_user) {
 	// note: if i do unserialize($serialized_user) instead, it will be an incomplete class.
 	$user->unserialize($serialized_user);
 }
 
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
+$romname = "../rbi2008.nes";
+try {
+	$myrom = new RBI3AndyBRom($romname);
+} catch (Exception $e) {
+	die('An error occurred while trying to load the file ' . $romname . '. Perhaps you forgot to put it there and make it writeable.');
+}

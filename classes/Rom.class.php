@@ -43,9 +43,13 @@ class Rom {
 	}
 
 	public function save() {
-		$handle = fopen($this->filename, 'w');
-		fwrite($handle, $this->romBinary);
-		fclose($handle);
+		try {
+			$handle = fopen($this->filename, 'w');
+			fwrite($handle, $this->romBinary);
+			fclose($handle);
+		} catch (Exception $e) {
+			throw new Exception('Problem saving rom.  Perhaps it is not writeable.  Error details: ' . $e->getMessage());
+		}
 	}
 
 	public function setFilename($filename) {
@@ -61,5 +65,4 @@ class Rom {
 	}
 
 }
-
 
