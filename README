@@ -33,6 +33,7 @@ That said, I do welcome contributions from anyone who wishes to develop this are
 /var/www/rbi3editor/rbi
 you would put your rom at
 /var/www/rbi3editor/myrom.nes
+** Note: make sure the rom is writeable (chmod 777)
 4. Update the name of the ROM in the bootstrap.php file:
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
 Change rbi2008.nes to whatever your rom is called, eg. myrom.nes

@@ -19,9 +19,8 @@ if ($serialized_user) {
 	$user->unserialize($serialized_user);
 }
 
-$romname = "../rbi2008.nes";
 try {
-	$myrom = new RBI3AndyBRom($romname);
+	$myrom = new RBI3AndyBRom("../rbi2008.nes");
 } catch (Exception $e) {
-	die('An error occurred while trying to load the file ' . $romname . '. Perhaps you forgot to put it there and make it writeable.');
+	die('An error occurred.  Here are the details: ' . $e->getMessage());
 }
