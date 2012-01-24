@@ -13,12 +13,13 @@ class Rom {
 
 	function __construct($filename) {
 		$this->filename = $filename;
-		try {
-			$handle = fopen($this->filename, "r");
+
+		$handle = @fopen($this->filename, "r+");
+		if(is_resource($handle)) {
 			$this->romBinary = fread($handle, filesize($this->filename));
 			fclose($handle);
 			$this->romHex = bin2hex($this->romBinary);
-		} catch (Exception $e) {
+		} else {
 			throw new Exception('Error trying to load the file ' . $this->filename . '. Perhaps you forgot to put it there and make it writeable.');
 		}
 	}
