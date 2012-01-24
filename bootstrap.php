@@ -18,3 +18,5 @@ if($serialized_user) {
 	// note: if i do unserialize($serialized_user) instead, it will be an incomplete class.
 	$user->unserialize($serialized_user);
 }
+
+$myrom = new RBI3AndyBRom("../rbi2008.nes");

@@ -1,8 +1,6 @@
 <?php
 include('bootstrap.php');
 
-
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
 //$playerlist = new PlayerCollection();
 //$myhitter = new Hitter($myrom, 190444);
 //$playerlist->addPlayer($myhitter);

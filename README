@@ -33,23 +33,15 @@ That said, I do welcome contributions from anyone who wishes to develop this are
 /var/www/rbi3editor/rbi
 you would put your rom at
 /var/www/rbi3editor/myrom.nes
-4. Update the name of the ROM everywhere you see the code (sorry, I will move this to a central place later on):
+4. Update the name of the ROM in the bootstrap.php file:
 $myrom = new RBI3AndyBRom("../rbi2008.nes");
-Change rbi2008.nes to myrom.nes
-As far as I know, this will be needed in the following files:
-hitter.edit.php
-hitter.handler.php
-hitter.view.php
-pitcher.edit.php
-pitcher.view.php
-player.list.php
-player.view.php
-team.list.php
+Change rbi2008.nes to whatever your rom is called, eg. myrom.nes
+
 Also, if you are not using the AndyB rom, you should probably use:
-$myrom = new RBI3Rom("../yourrom.nes");
+$myrom = new RBI3Rom("../myrom.nes");
 
 4. Run the code and hope for the best.
-5. The code will directly edit your rom, so take a backup before getting started.  To play your edited rom, simply run your favourite emulator and load the edited yourrom.nes.
+5. The code will directly edit your rom, so take a backup before getting started.  To play your edited rom, simply run your favourite emulator and load the edited myrom.nes (or whatever it was called).
 
 For further documentation, you can refer to the docs folder.  It may not be very up to date though.
 

@@ -1,8 +1,6 @@
 <?php
 include('bootstrap.php');
 
-
-$myrom = new RBI3AndyBRom("../rbi2008.nes");
 //$playerlist = new PlayerCollection();
 //$myhitter = new Hitter($myrom, 190444);
 //$playerlist->addPlayer($myhitter);
@@ -50,7 +48,7 @@ $teamlist = $myrom->getTeams();
 		include('partials/menu.partial.php');
 		?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" >
-			Team: 
+			Team:
 			<select name="team">
 				<?php
 				foreach ($teamlist as $team) {
@@ -63,7 +61,7 @@ $teamlist = $myrom->getTeams();
 				?>
 			</select>
 			<input type="submit" value="FILTER" />
-		</form>	
+		</form>
 		<?php
 		echo $playerlist->toHTMLTable();
 		?>
