@@ -69,6 +69,7 @@ FUTURE DEVELOPMENT GOALS:
 - changing character sets in the rom
 - edit alternate versions of RBI (RBI 1, RBI 2, RBI 93, etc)
 - expand engine to allow for editing other types of roms (Tecmo bowl would probably be next)
+- integrate with jsnes so you can test on the fly
 
 Thanks,
 Peter
