@@ -47,12 +47,12 @@ class Rom {
 	}
 
 	public function save() {
-		try {
-			$handle = fopen($this->filename, 'w');
+		$handle = @fopen($this->filename, "w");
+		if(is_resource($handle)) {
 			fwrite($handle, $this->romBinary);
 			fclose($handle);
-		} catch (Exception $e) {
-			throw new Exception('Problem saving rom.  Perhaps it is not writeable.  Error details: ' . $e->getMessage());
+		} else {
+			throw new Exception('Error trying to save to the file ' . $this->filename . '. Perhaps you forgot to make it writeable.');
 		}
 	}
 
