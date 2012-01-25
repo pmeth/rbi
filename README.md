@@ -1,3 +1,6 @@
+RBI
+===
+
 PROJECT OVERVIEW:
 This is a PHP based editor and abstraction layer for the classic Nintendo Entertainment System (NES) game RBI Baseball 3.
 
