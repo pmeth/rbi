@@ -15,7 +15,7 @@ I created this project partly for my own entertainment and partly as a learning 
 This is a work in progress and in fairly rough condition right now.  You will likely have to be a decent PHP developer to get much out of this project for now. I am working on making it more user friendly and may eventually launch a website where users can upload and edit roms without diving into the code.  
     
 You can reach me on twitter at:  
-@mrpmeth  
+[@mrpmeth](https://twitter.com/mrpmeth)  
   
   
 TO GET STARTED  
