@@ -1,7 +1,9 @@
 RBI
 ===
 
-PROJECT OVERVIEW:
+PROJECT OVERVIEW
+----------------
+
 This is a PHP based editor and abstraction layer for the classic Nintendo Entertainment System (NES) game RBI Baseball 3.
 
 The code works by reading lines from an RBI 3 rom and converting them to human readable language and defining an editable data structure.
@@ -18,12 +20,14 @@ time and that I might use later (does that make me a code hoarder?).
 
 This is a work in progress and in fairly rough condition right now.  You will likely have to be a decent PHP developer to get much out of this project for now.
 I am working on making it more user friendly and may eventually launch a website where users can upload and edit roms without diving into the code.
-
+  
 You can reach me on twitter at:
 @mrpmeth
 
 
-TO GET STARTED:
+TO GET STARTED
+--------------
+
 1. Download the source and install on a webserver.  You will probably need PHP 5.3+.
 2. There is some incomplete code for registering, logging in and uploading files which requires a MySQL database.
 To setup the database, run the queries in the following folder against your database.
@@ -56,7 +60,9 @@ For further documentation, you can refer to the docs folder.  It may not be very
 Note, there is a v1 folder that has a more user friendly front end, but the back end is all procedural code.
 I will do a separate writeup for how to get started with that one when I get some time.
 
-FUTURE DEVELOPMENT GOALS:
+FUTURE DEVELOPMENT GOALS
+------------------------
+
 - get help from other interested parties
 - centralize the loading of the rom
 - allow for choosing different roms from the front-end
