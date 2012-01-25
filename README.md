@@ -29,7 +29,7 @@ TO GET STARTED
 	/bootstrap.php  
 	**Note**: *this is incomplete code and using it may introduce security vulnerabilities. That said, I do welcome contributions from anyone who wishes to develop this area further.*  
 	* If you want to remove the database requirement, you can comment out the marked lines in bootstrap.php, then don't click on the Login or Register link when running the code.  
-3. Put an RBI3 (preferably the version hacked byIf you want to remove the database requirement, you can comment out the marked lines in bootstrap.php, then don't click on the Login or Register link when running the code. andyb that gives access to 6 divisions and 30 teams and a few other nice enhancements) in the directory above where you installed this.  
+3. Put an RBI3 (preferably the version hacked by andyb that gives access to 6 divisions and 30 teams and a few other nice enhancements) in the directory above where you installed this.  
 	* so for example if you installed to:  
 	/var/www/rbi3editor/rbi  
 	you would put your rom at  
