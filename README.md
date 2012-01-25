@@ -52,9 +52,9 @@ FUTURE DEVELOPMENT GOALS
 ------------------------  
   
 - get help from other interested parties  
-- centralize the loading of the rom  
 - allow for choosing different roms from the front-end  
 - allow for uploading roms from the front-end  
+- allow for trading of players  
 - more secure registering and logging in  
 - allow storing rom data in a MySQL database  
 - expand the player list page to show more attributes and have more filters and sorting (like v1 does)  
