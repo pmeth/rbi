@@ -6,6 +6,9 @@
  * @author Peter Meth
  */
 class RBI30TeamRom extends RBI3Rom {
+	protected $hexOffsets;
+	protected $allPlayersCollection;
+	protected $maxPlayerNameLength;
 
 	function __construct($filename) {
 		parent::__construct($filename);
@@ -20,6 +23,8 @@ class RBI30TeamRom extends RBI3Rom {
 			 'era1end' => '19e88',
 			 'era2start' => '19f48',
 		);
+
+		$this->maxPlayerNameLength = 8;
 	}
 
 }
