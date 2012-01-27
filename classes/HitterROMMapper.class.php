@@ -20,26 +20,102 @@ class HitterROMMapper extends PlayerROMMapper {
 	public function get($offset) {
 		$playerhex = $this->getHitterHex($offset);
 		if ($playerhex) {
-			$player = new Hitter($offset);
+			$hitter = new Hitter($offset);
 
-			// these 3 lines are repetitious from the player version of get()
-			$player->setLineupNumber($this->getLineupNumberFromHex($playerhex));
-			$player->setName($this->getNameFromHex($playerhex));
-			$teammapper = new TeamROMMapper($this->rom);
-			$player->setTeam($teammapper->get($this->getTeamOffset($offset)));
+			// we can get the lineupnumber, player name, and team object from the parent
+			$player = parent::get($offset);
+			$hitter->setLineupNumber($player->getLineupNumber());
+			$hitter->setName($player->getName());
+			$hitter->setTeam($player->getTeam());
 
-			$player->setAverage($this->getAverageFromHex($playerhex));
-			$player->setBats($this->getBatsFromHex($playerhex));
-			$player->setContact($this->getContactFromHex($playerhex));
-			$player->setHomeruns($this->getHomerunsFromHex($playerhex));
-			$player->setPosition($this->getPositionFromHex($playerhex));
-			$player->setPower($this->getPowerFromHex($playerhex));
-			$player->setSpeed($this->getSpeedFromHex($playerhex));
+			$hitter->setAverage($this->getAverageFromHex($playerhex));
+			$hitter->setBats($this->getBatsFromHex($playerhex));
+			$hitter->setContact($this->getContactFromHex($playerhex));
+			$hitter->setHomeruns($this->getHomerunsFromHex($playerhex));
+			$hitter->setPosition($this->getPositionFromHex($playerhex));
+			$hitter->setPower($this->getPowerFromHex($playerhex));
+			$hitter->setSpeed($this->getSpeedFromHex($playerhex));
 
-			return $player;
+			return $hitter;
 		} else {
 			return false;
 		}
+	}
+
+	public function save(Hitter $hitter) {
+		parent::save($hitter);
+		$newhex = $this->getHitterHex($hitter->getOffset());
+
+		// homeruns
+		$newhex = substr_replace($newhex, $this->decToHex($hitter->getHomeruns()), 18, 2);
+
+		// bats
+		switch ($hitter->getBats()) {
+			case "S":
+				$lefty = '00';
+				$switchhitter = '01';
+				break;
+			case "R":
+				$lefty = '00';
+				$switchhitter = '00';
+				break;
+			case "L";
+				$lefty = '01';
+				$switchhitter = '00';
+				break;
+			default:
+				$this->isValid = false;
+				$this->error .= 'Invalid bats.  Valid options are S, R, L';
+				$lefty = '00';
+				$switchhitter = '00';
+		}
+
+		$newhex = substr_replace($newhex, $lefty, 14, 2);
+		$newhex = substr_replace($newhex, $switchhitter, 30, 2);
+
+		// power
+		// POWER uses 2 hex digits (4 characters total)
+		$powerhex = str_pad($this->decToHex($hitter->getPower()), 4, "0", STR_PAD_LEFT);
+		// power is stored in the rom with the 2 digits reversed for some reason, so let's reverse them
+		$power1 = substr($powerhex, -2);
+		$power2 = substr($powerhex, 0, 2);
+		$newhex = substr_replace($newhex, $power1 . $power2, 22, 4);
+
+		// contact
+		$newhex = substr_replace($newhex, $this->decToHex($hitter->getContact()), 20, 2);
+
+		// speed
+		$newhex = substr_replace($newhex, $this->decToHex($hitter->getSpeed()), 26, 2);
+
+		// position
+		switch ($hitter->getPosition()) {
+			case "I":
+				$positionhex = '01';
+				break;
+			case "O":
+				$positionhex = '10';
+				break;
+			case "C";
+				$positionhex = '00';
+				break;
+			default:
+//				$this->isValid = false;
+//				$this->error .= 'Invalid position.  Valid options are I, O, C';
+				$positionhex = '00';
+		}
+		$newhex = substr_replace($newhex, $positionhex, 28, 2);
+
+		// average
+		// average is set by adding 111 to the hex value
+		$newhex = substr_replace($newhex, $this->decToHex($hitter->getAverage() - 111), 16, 2);
+
+		$this->rom->setHexString($newhex, $hitter->getOffset());
+		$this->rom->save();
+	}
+
+	public function validate(Hitter $hitter) {
+		// todo: add some real validation
+		return true;
 	}
 
 	protected function getHitterHex($offset) {

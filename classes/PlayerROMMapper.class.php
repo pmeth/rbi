@@ -26,13 +26,34 @@ class PlayerROMMapper extends BaseROMMapper {
 			}
 			
 			$player->setLineupNumber($this->getLineupNumberFromHex($playerhex));
-			$player->setName($this->getNameFromHex($playerhex));
+			$player->setName(trim($this->getNameFromHex($playerhex)));
 			$teammapper = new TeamROMMapper($this->rom);
 			$player->setTeam($teammapper->get($this->getTeamOffset($offset)));
 			return $player;
 		}
 	}
 
+	public function save(Player $player) {
+		$newhex = $this->getPlayerHex($player->getOffset());
+		
+		//lineupnumber
+		$newhex = substr_replace($newhex, $this->decToHex($player->getLineupNumber()), 0, 2);
+		
+		//name
+		$namearray = $this->getHexArrayFromName($player->getName(), $this->rom->getMaxPlayerNameLength());
+		$newhex = substr_replace($newhex, $namearray[0], 2, 2);
+		$newhex = substr_replace($newhex, $namearray[1], 4, 2);
+		$newhex = substr_replace($newhex, $namearray[2], 6, 2);
+		$newhex = substr_replace($newhex, $namearray[3], 8, 2);
+		$newhex = substr_replace($newhex, $namearray[4], 10, 2);
+		$newhex = substr_replace($newhex, $namearray[5], 12, 2);
+		$newhex = substr_replace($newhex, $namearray[6], 32, 2);
+		$newhex = substr_replace($newhex, $namearray[7], 34, 2);
+		
+		$this->rom->setHexString($newhex, $player->getOffset());
+		$this->rom->save();
+	}
+	
 	protected function getTeamOffset($offset) {
 		if ($offset >= $this->rom->getHitterStart() && $offset <= $this->rom->getHitterEnd()) {
 			// this must be a hitter
@@ -69,9 +90,24 @@ class PlayerROMMapper extends BaseROMMapper {
 
 		return $name;
 	}
+	protected function getHexArrayFromName($name, $maxlength) {
+		$hex = array();
+		
+		// we want the name to be exactly $maxlength characters long, so we fill it with single spaces if needed
+		$name = str_pad($name, $maxlength, ' ');
+		$name = substr($name, 0, $maxlength);
+		//TODO: make this less ugly
+		$lookuptable = $this->rom->getNameCharToHex();
 
-	public function writeToRom() {
-		$this->rom->setHexString($this->playerHex, $this->offset);
+		for($i = 0; $i < strlen($name); $i++) {
+			$hex[$i] = $lookuptable[$name[$i]];
+		}
+
+		return $hex;
+	}
+
+	public function writeToRom(Player $player) {
+		$this->rom->setHexString($this->getPlayerHex($offset));
 		$this->rom->save();
 	}
 

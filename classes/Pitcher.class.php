@@ -7,7 +7,6 @@
  */
 class Pitcher extends Player {
 
-	protected $eraIndex;
 	protected $era;
 	protected $throws;
 	protected $sinkerspeed;
@@ -28,24 +27,6 @@ class Pitcher extends Player {
 	}
 
 	public function setThrows($throws) {
-		switch ($throws) {
-			case "R":
-				$throwshex = '0';
-				break;
-			case "L";
-				$throwshex = '1';
-				break;
-			case "SR":
-				$throwshex = '2';
-				break;
-			case "SL":
-				$throwshex = '3';
-				break;
-			default:
-				throw new Exception('Invalid throws.  Valid options are R, L, SR, SL');
-				$throwshex = '0';
-		}
-//		$this->playerHex = substr_replace($this->playerHex, $throwshex, 15, 1);
 		$this->throws = $throws;
 	}
 
@@ -56,29 +37,6 @@ class Pitcher extends Player {
 	public function setEra($era) {
 		$this->era = $era;
 		
-		/*
-		$eratable = $this->rom->getEraTable();
-		//print_r($eratable);
-		$found = array_search($era, $eratable);
-		if(false !== $found) {
-			$this->eraIndex = $found;
-		} else {
-			// find second occurrence of 0.00.  first occurrence is the real 0.00
-			$erakeys = array_keys($eratable, "0.00");
-			$this->eraIndex = $erakeys[1];
-			$eratable[$this->eraIndex] = $era;
-			$this->rom->setEraTable($eratable);
-		}
-		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($this->eraIndex), 16, 2);
-		*/
-	}
-
-	public function getEraIndex() {
-		return $this->eraIndex;
-	}
-
-	public function setEraIndex($eraIndex) {
-		$this->eraIndex = $eraIndex;
 	}
 
 	public function getSinkerspeed() {
@@ -94,7 +52,6 @@ class Pitcher extends Player {
 			$this->isValid = false;
 			$this->error .= 'Normal sinker speed range is 130 - 200, to go outside that you must select Accept Abnormal';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($sinkerspeed), 18, 2);
 	}
 
 	public function getCurvespeed() {
@@ -110,7 +67,6 @@ class Pitcher extends Player {
 			$this->isValid = false;
 			$this->error .= 'Normal curve speed range is 150 - 210, to go outside that you must select Accept Abnormal';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($curvespeed), 20, 2);
 	}
 
 	public function getFastballspeed() {
@@ -126,7 +82,6 @@ class Pitcher extends Player {
 			$this->isValid = false;
 			$this->error .= 'Normal fastball speed range is 160 - 230, to go outside that you must select Accept Abnormal';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($fastballspeed), 22, 2);
 	}
 
 	public function getCurveleft() {
@@ -139,7 +94,6 @@ class Pitcher extends Player {
 			$this->isValid = false;
 			$this->error .= 'Invalid curve left.  Valid numbers are 0 to 15';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, substr($this->decToHex($curveleft), -1), 24, 1);
 	}
 
 	public function getCurveright() {
@@ -152,7 +106,6 @@ class Pitcher extends Player {
 			$this->isValid = false;
 			$this->error .= 'Invalid curve right.  Valid numbers are 0 to 15';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, substr($this->decToHex($curveright), -1), 25, 1);
 	}
 
 	public function getStamina() {
@@ -168,7 +121,6 @@ class Pitcher extends Player {
 			$this->isValid = false;
 			$this->error .= 'Normal stamina range is 12 - 90, to go outside that you must select Accept Abnormal';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($stamina), 26, 2);
 	}
 
 	public function getSink() {
@@ -181,7 +133,6 @@ class Pitcher extends Player {
 			$this->isValid = false;
 			$this->error .= 'Invalid sink.  Valid numbers are 0 to 16';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, substr($this->decToHex($sink), -1), 14, 1);
 	}
 
 }

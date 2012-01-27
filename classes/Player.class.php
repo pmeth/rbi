@@ -8,10 +8,14 @@ class Player {
 	protected $lineupNumber;
 	protected $team;
 	protected $acceptAbnormal;
+	protected $isValid;
+	protected $error;
+	protected $playerHex;
 
 	public function __construct($offset) {
 		$this->acceptAbnormal = false;
 		$this->offset = $offset;
+		$this->isValid = true;
 	}
 
 	public function getAcceptAbnormal() {
@@ -47,7 +51,6 @@ class Player {
 		if ($newlineupNumber < 0 || $newlineupNumber > 23) {
 			throw new Exception('Invalid lineup number.  Valid numbers are 0 to 23');
 		}
-		//$this->playerHex = substr_replace($this->playerHex, $this->decToHex($newlineupNumber), 0, 2);
 	}
 
 	public function setName($name) {
@@ -60,6 +63,11 @@ class Player {
 
 	public function setType($type) {
 		$this->type = $type;
+	}
+
+	public function valid() {
+		// todo: move this functionality into some other structure, perhaps a validator object
+		return $this->isValid && $this->playerHex != "000000000000000000000000000000000000";
 	}
 
 }

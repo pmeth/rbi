@@ -4,7 +4,7 @@ include('bootstrap.php');
 if (empty($_GET['offset'])) {
 	die("Sorry, invalid offset. <a href='index.php'>Return to Home</a>");
 }
-
+$offset = $_GET['offset'];
 $mapper = new HitterROMMapper($myrom);
 $myhitter = $mapper->get($offset);
 
@@ -21,9 +21,9 @@ if (!empty($_POST['submit'])) {
 	$myhitter->setContact($_POST['contact']);
 	$myhitter->setSpeed($_POST['speed']);
 
-	if ($myhitter->valid()) {
-		$myhitter->writeToRom();
-		echo "Player updated<br/>";
+	if ($mapper->validate($myhitter)) {
+		$mapper->save($myhitter);
+		header("Location: hitter.view.php?offset=$offset&message=Player updated");
 	} else {
 		echo "Some fields did not validate:<br>";
 		echo $myhitter->getError();
@@ -33,10 +33,11 @@ if (!empty($_POST['submit'])) {
 $hitterdetails = '
 	Hitter:<br />
 	<form action="' . $_SERVER['PHP_SELF'] . '?offset=' . $offset . '" method="post">
-	Offset: <input name="offset" type="text" readonly="readonly" value="' . $myhitter->getOffset() . '" /><br />
+	Team: ' . $myhitter->getTeam()->getName() . '<br />
+	Offset: ' . $myhitter->getOffset() . '<br />
+	Lineup #: ' . $myhitter->getLineupNumber() . '<br />
+	Type: ' . $myhitter->getType() . '<br />
 	Name: <input name="name" type="text" value="' . $myhitter->getName() . '" /><br />
-	Lineup #: <input name="lineupnumber" type="text" readonly="readonly" value="' . $myhitter->getLineupNumber() . '" /><br />
-	Type: <input name="type" type="text" readonly="readonly" value="' . $myhitter->getType() . '" /><br />
 	Pos: <input name="pos" type="text" value="' . $myhitter->getPosition() . '" /><br />
 	Bats: <input name="bats" type="text" value="' . $myhitter->getBats() . '" /><br />
 	Avg: <input name="avg" type="text" value="' . $myhitter->getAverage() . '" /><br />

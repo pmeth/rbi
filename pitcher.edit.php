@@ -24,9 +24,10 @@ if (!empty($_POST['submit'])) {
 	$mypitcher->setStamina($_POST['stamina']);
 	$mypitcher->setSink($_POST['sink']);
 
-	if ($mypitcher->valid()) {
-		$mypitcher->writeToRom();
-		echo "Player updated<br/>";
+	if ($mapper->validate($mypitcher)) {
+		$mapper->save($mypitcher);
+		header("Location: pitcher.view.php?offset=$offset&message=Player updated");
+		exit;
 	} else {
 		echo "Some fields did not validate:<br>";
 		echo $mypitcher->getError();

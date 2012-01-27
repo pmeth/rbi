@@ -15,6 +15,7 @@ class RBI3Rom extends Rom {
 	protected $offsets;
 	protected $eraTable;
 	protected $allPlayersCollection;
+	protected $maxPlayerNameLength;
 
 	function __construct($filename) {
 		parent::__construct($filename);
@@ -38,6 +39,7 @@ class RBI3Rom extends Rom {
 			$this->offsets[$key] = $this->offsetHexToDec($value);
 		}
 
+		$this->maxPlayerNameLength = 8;
 		$this->generateTeamMappings();
 		$this->generateNameMappings();
 		$this->generateEraTable();
@@ -79,7 +81,11 @@ class RBI3Rom extends Rom {
 		return $this->eraTable;
 	}
 
-	public function setEratable($eratable) {
+	public function getMaxPlayerNameLength() {
+		return $this->maxPlayerNameLength;
+	}
+
+		public function setEratable($eratable) {
 		$this->eraTable = $eratable;
 
 		//write the new eratable to the binary

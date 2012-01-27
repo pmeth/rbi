@@ -21,7 +21,6 @@ class Hitter extends Player {
 			$this->isValid = false;
 			$this->error .= 'Invalid home runs.  Valid numbers are 0 to 99';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($homeruns), 18, 2);
 	}
 
 	public function getHomeruns() {
@@ -29,27 +28,6 @@ class Hitter extends Player {
 	}
 
 	public function setBats($bats) {
-		switch ($bats) {
-			case "S":
-				$lefty = '00';
-				$switchhitter = '01';
-				break;
-			case "R":
-				$lefty = '00';
-				$switchhitter = '00';
-				break;
-			case "L";
-				$lefty = '01';
-				$switchhitter = '00';
-				break;
-			default:
-				$this->isValid = false;
-				$this->error .= 'Invalid bats.  Valid options are S, R, L';
-				$lefty = '00';
-				$switchhitter = '00';
-		}
-//		$this->playerHex = substr_replace($this->playerHex, $lefty, 14, 2);
-//		$this->playerHex = substr_replace($this->playerHex, $switchhitter, 30, 2);
 		$this->bats = $bats;
 	}
 
@@ -67,16 +45,6 @@ class Hitter extends Player {
 			$this->error .= 'Normal Power range is 500 - 1200, to go outside that you must select Accept Abnormal';
 		}
 
-		/* 		
-		  // POWER uses 2 hex digits (4 characters total)
-		  $powerhex = str_pad($this->decToHex($power), 4, "0", STR_PAD_LEFT);
-		  // power is stored in the rom with the 2 digits reversed for some reason, so let's reverse them
-		  $power1 = substr($powerhex, -2);
-
-		  $power2 = substr($powerhex, 0, 2);
-		  $this->playerHex = substr_replace($this->playerHex, $power1 . $power2, 22, 4);
-
-		 */
 	}
 
 	public function getPower() {
@@ -92,7 +60,6 @@ class Hitter extends Player {
 			$this->isValid = false;
 			$this->error .= 'Normal Contact range is 0 - 50, to go outside that you must select Accept Abnormal';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($contact), 20, 2);
 	}
 
 	public function getContact() {
@@ -108,7 +75,6 @@ class Hitter extends Player {
 			$this->isValid = false;
 			$this->error .= 'Normal speed range is 120 - 180, to go outside that you must select Accept Abnormal';
 		}
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($speed), 26, 2);
 	}
 
 	public function getSpeed() {
@@ -117,22 +83,6 @@ class Hitter extends Player {
 
 	public function setPosition($position) {
 		$this->position = $position;
-		switch ($position) {
-			case "I":
-				$positionhex = '01';
-				break;
-			case "O":
-				$positionhex = '10';
-				break;
-			case "C";
-				$positionhex = '00';
-				break;
-			default:
-				$this->isValid = false;
-				$this->error .= 'Invalid position.  Valid options are I, O, C';
-				$positionhex = '00';
-		}
-//		$this->playerHex = substr_replace($this->playerHex, $positionhex, 28, 2);
 	}
 
 	public function getPosition() {
@@ -145,8 +95,6 @@ class Hitter extends Player {
 			$this->isValid = false;
 			$this->error .= 'Invalid average.  Valid numbers are 111 to 366';
 		}
-		// average is set by adding 111 to the hex value
-//		$this->playerHex = substr_replace($this->playerHex, $this->decToHex($average - 111), 16, 2);
 	}
 
 	public function getAverage() {
