@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\RBI;
 class Hitter extends Player {
 
 	protected $bats;

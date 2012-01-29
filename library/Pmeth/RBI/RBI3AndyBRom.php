@@ -5,6 +5,8 @@
  *
  * @author Peter Meth
  */
+
+namespace Pmeth\RBI;
 class RBI3AndyBRom extends RBI3Rom {
 
     function __construct($filename) {

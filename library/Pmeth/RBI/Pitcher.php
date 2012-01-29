@@ -5,6 +5,7 @@
  *
  * @author Peter Meth
  */
+ namespace Pmeth\RBI;
 class Pitcher extends Player {
 
 	protected $era;

@@ -5,7 +5,8 @@
  *
  * @author Peter Meth
  */
-class PlayerCollection implements Countable, Iterator {
+ namespace Pmeth\RBI;
+class PlayerCollection implements \Countable, \Iterator {
 
 	protected $players;
 	protected $index;

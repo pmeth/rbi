@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\Common;
 /**
  * Description of FileUploader
  * 
@@ -7,6 +7,7 @@
  *
  * @author Peter Meth
  */
+
 class FileUploader {
 
 // define 'FileUploader' class

@@ -1,11 +1,13 @@
 <?php
-
+namespace Pmeth\Common;
 /**
  * Description of Person
  *
  * @author Peter Meth
  */
-class Person  implements Serializable {
+
+
+class Person  implements \Serializable {
 
 	protected $_db;
 	protected $_table = 'persons';
@@ -16,7 +18,7 @@ class Person  implements Serializable {
 	protected $_valid;
 	protected $_error;
 
-	public function __construct(PDO $db, $id) {
+	public function __construct(\PDO $db, $id) {
 		$this->_db = $db;
 
 		$query = "

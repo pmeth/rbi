@@ -5,6 +5,7 @@
  *
  * @author Peter Meth
  */
+ namespace Pmeth\RBI;
 class PitcherROMMapper extends PlayerROMMapper {
 
 	protected $minOffset;

@@ -5,6 +5,7 @@
  *
  * @author Peter Meth
  */
+ namespace Pmeth\RBI;
 class TeamROMMapper extends BaseROMMapper {
 
 	function __construct($rom) {

@@ -4,6 +4,7 @@
  *
  * @author Peter Meth
  */
+ namespace Pmeth\RBI;
 class Team {
 	protected $offset;
 	protected $name;

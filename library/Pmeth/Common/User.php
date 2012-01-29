@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\Common;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -10,7 +10,10 @@
  *
  * @author Peter Meth
  */
-class User implements Serializable {
+
+
+
+class User implements \Serializable {
 	const USERNAME_MIN_LENGTH = 3;
 	protected $_db;
 	protected $_table = 'users';
@@ -22,7 +25,7 @@ class User implements Serializable {
 	protected $_passwordhash;
 	protected $_error;
 
-	public function __construct(PDO $db, $username, $password) {
+	public function __construct(\PDO $db, $username, $password) {
 		$this->_db = $db;
 		$this->_salt = $this->_getSalt($username);
 

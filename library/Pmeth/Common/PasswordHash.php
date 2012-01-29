@@ -1,4 +1,5 @@
 <?php
+namespace Pmeth\Common;
 #
 # Portable PHP password hashing framework.
 #
@@ -24,6 +25,7 @@
 # Obviously, since this code is in the public domain, the above are not
 # requirements (there can be none), but merely suggestions.
 #
+
 class PasswordHash {
 	var $itoa64;
 	var $iteration_count_log2;

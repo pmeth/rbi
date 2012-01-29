@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\RBI;
 class Player {
 
 	protected $offset;

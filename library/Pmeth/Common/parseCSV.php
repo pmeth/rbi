@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\Common;
 class parseCSV {
 	
 /*

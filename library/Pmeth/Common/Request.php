@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\Common;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -10,6 +10,9 @@
  *
  * @author Peter Meth
  */
+
+
+
 class Request {
 
 	protected $getVars = array();

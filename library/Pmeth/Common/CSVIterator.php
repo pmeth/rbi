@@ -1,8 +1,9 @@
 <?php
-
+namespace Pmeth\Common;
 /**
  * Original from: http://snipplr.com/view/1986/
  */
+
 class CSVIterator implements Iterator {
 	const ROW_SIZE = 4096;
 

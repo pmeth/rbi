@@ -18,7 +18,7 @@ class PlayerTest extends PHPUnit_Framework_TestCase {
 	 * This method is called before a test is executed.
 	 */
 	protected function setUp() {
-		$this->object = new Player(123456);
+		$this->object = new RBI\Player(123456);
 		$this->object->setAcceptAbnormal(true);
 		$this->object->setTeam('AT');
 		$this->object->setName('Gonzales');

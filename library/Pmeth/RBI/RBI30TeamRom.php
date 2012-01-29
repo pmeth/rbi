@@ -5,6 +5,7 @@
  *
  * @author Peter Meth
  */
+ namespace Pmeth\RBI;
 class RBI30TeamRom extends RBI3Rom {
 	protected $hexOffsets;
 	protected $allPlayersCollection;

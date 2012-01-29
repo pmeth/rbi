@@ -8,14 +8,14 @@ require_once dirname(__FILE__) . '/../../classes/Hitter.class.php';
  *
  * @author Peter Meth
  */
-class HitterTest extends PlayerTest {
+class HitterTest extends RBI\PlayerTest {
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 */
 	protected function setUp() {
-		$this->object = new Hitter('123456');
+		$this->object = new RBI\Hitter('123456');
 		$this->object->setAcceptAbnormal(true);
 		$this->object->setTeam('AT');
 		$this->object->setPosition('O');
