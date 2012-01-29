@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\RBI;
 include('bootstrap.php');
 if (empty($_GET['offset'])) {
 	die("Sorry, invalid offset. <a href='index.php'>Return to Home</a>");

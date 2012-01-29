@@ -1,5 +1,5 @@
 <?php
-
+namespace Pmeth\RBI;
 include('bootstrap.php');
 
 $rom = new RBI3AndyBRom('../rbi2008.nes');

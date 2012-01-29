@@ -1,4 +1,5 @@
 <?php
+namespace Pmeth\RBI;
 include('bootstrap.php');
 try {
 	if ($_POST['send']) {

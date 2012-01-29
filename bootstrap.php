@@ -1,20 +1,30 @@
 <?php
-
+namespace Pmeth\RBI;
 error_reporting(E_ALL);
 
-function classAutoload($class_name) {
-	require_once("classes/$class_name.class.php");
-}
+use Respect\Validation\Validator as v;
+use Pmeth\Common;
 
-spl_autoload_register('classAutoload');
+//function classAutoload($class_name) {
+//	require_once("classes/$class_name.class.php");
+//}
+//
+//spl_autoload_register('classAutoload');
 
+set_include_path('library' . PATH_SEPARATOR . get_include_path());
+require('SplClassLoader.php');
 
-$request = new Request();
+$classLoader = new \SplClassLoader();
+$classLoader->setIncludePathLookup(true);
+$classLoader->setMode(\SplClassLoader::MODE_SILENT);
+$classLoader->register();
+
+$request = new Common\Request();
 
 // Start - You can probably comment out the next few lines of code if you don't intend on having logins
-$db = new PDO('mysql:dbname=rbi;host=127.0.0.1', 'root', '');
+$db = new \PDO('mysql:dbname=rbi;host=127.0.0.1', 'root', '');
 
-$user = new User($db, null, null);
+$user = new Common\User($db, null, null);
 $serialized_user = $request->getSessionVar('user');
 if ($serialized_user) {
 	// note: if i do unserialize($serialized_user) instead, it will be an incomplete class.

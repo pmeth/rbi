@@ -1,10 +1,13 @@
 <?php
+namespace Pmeth\RBI;
+use Pmeth\Common;
+
 include('bootstrap.php');
 
 // this should clear any already set user
 $request->unsetSessionVar('user');
 
-$user = new User($db, $request->getPostVar('username'), $request->getPostVar('password'));
+$user = new Common\User($db, $request->getPostVar('username'), $request->getPostVar('password'));
 
 
 if ($user->getLoggedIn()) {

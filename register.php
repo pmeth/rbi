@@ -1,3 +1,8 @@
+<?php
+namespace Pmeth\RBI;
+use Pmeth\Common;
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,7 +20,7 @@
 				  $request->getPostVar('username') != '' &&
 				  $request->getPostVar('password') != ''
 		) {
-			$newperson = new Person($db, null);
+			$newperson = new Common\Person($db, null);
 			$newperson->setFirstName($request->getPostVar('first_name'));
 			$newperson->setLastName($request->getPostVar('last_name'));
 			$newperson->setEmail($request->getPostVar('email'));
@@ -23,7 +28,7 @@
 			// we only want to continue if the user can be safely added
 			if ($newperson->validateNew()) {
 				$newperson->save();
-				$newuser = new User($db, $request->getPostVar('username'), $request->getPostVar('password'));
+				$newuser = new Common\User($db, $request->getPostVar('username'), $request->getPostVar('password'));
 				$newuser->setPerson($newperson);
 				if ($newuser->validateNew()) {
 					$newuser->save();

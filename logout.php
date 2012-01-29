@@ -1,4 +1,5 @@
 <?php
+namespace Pmeth\RBI;
 include('bootstrap.php');
 
 // this should clear any already set user
