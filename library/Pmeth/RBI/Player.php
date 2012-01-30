@@ -49,7 +49,7 @@ class Player {
 	public function setLineupNumber($newlineupNumber) {
 		$this->lineupNumber = $newlineupNumber;
 		if ($newlineupNumber < 0 || $newlineupNumber > 23) {
-			throw new Exception('Invalid lineup number.  Valid numbers are 0 to 23');
+			throw new \Exception('Invalid lineup number.  Valid numbers are 0 to 23');
 		}
 	}
 

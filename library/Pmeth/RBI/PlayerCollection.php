@@ -62,6 +62,7 @@ class PlayerCollection implements \Countable, \Iterator {
 				<th>Name</th>
 				<th>Lineup #</th>
 				<th>Type</th>
+				<th>Avg</th>
 				<th>Speed</th>
 			</tr>
 		";
@@ -69,6 +70,7 @@ class PlayerCollection implements \Countable, \Iterator {
 		$this->rewind();
 		while($this->valid()) {
 			$player = $this->current();
+			$avg = $player->getType() == 'Hitter' ?  $player->getAverage() : '';
 			$speed = $player->getType() == 'Hitter' ?  $player->getSpeed() : '';
 			$return .= "
 				<tr
@@ -81,6 +83,7 @@ class PlayerCollection implements \Countable, \Iterator {
 					<td>" . $player->getName() . "</td>
 					<td>" . $player->getLineupNumber() . "</td>
 					<td>" . $player->getType() . "</td>
+					<td>" . $avg . "</td>
 					<td>" . $speed . "</td>
 				</tr>
 			";

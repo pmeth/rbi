@@ -7,12 +7,13 @@
  */
 
 namespace Pmeth\RBI;
+
 class RBI3AndyBRom extends RBI3Rom {
 
-    function __construct($filename) {
-        parent::__construct($filename);
-    }
+   function __construct($filename) {
+      parent::__construct($filename);
+      $this->romType = 'RBI3 Andy B';
+   }
 
 }
-
 

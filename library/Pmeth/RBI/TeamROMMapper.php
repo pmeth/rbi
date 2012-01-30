@@ -33,6 +33,11 @@ class TeamROMMapper extends BaseROMMapper {
 	}
 
 	protected function getTeams() {
+      // todo: come up with a better check
+      if($this->rom->getMaxPlayerNameLength() == 6) { // this means we are dealing with RBI Rom
+         
+         return array_fill(1,35,'Team');
+      }
 		$start = $this->rom->getTeamStart();
 		$end = $this->rom->getTeamEnd();
 		$numcharacters = $end - $start;
