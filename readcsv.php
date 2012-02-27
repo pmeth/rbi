@@ -14,7 +14,7 @@ foreach($csv->data as $line) {
 */
 
 // Option 2
-$csv = new CSVIterator('../uploads/sample2.txt');
+$csv = new \Pmeth\Common\CSVIterator('../uploads/sample2.txt');
 
 foreach($csv as $line) {
 	print_r($line);
