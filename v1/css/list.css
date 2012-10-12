@@ -1,0 +1,36 @@
+body {
+    font-family: Arial;
+    font-size: 12px;
+    margin-top: 0;
+    background-color: white;
+}
+
+table {
+    font-family: Arial;
+    font-size: 12px;
+}
+
+th {
+    background-color: #E3EBE2;
+}
+
+
+.submitbutton {
+    border: 1px solid #003366;
+    background-color:#FFFFFF;
+    /* background-image: url(../images/buttonbg1.png); */
+    background-repeat:repeat-x;
+    font-weight: bold;
+    font-family: Tahoma, "Arial Black", Arial;
+    font-size: 6.5pt;
+    color: #B42C2C;
+    width: 150px;
+}
+
+select, input {
+    font: 12px Arial;
+}
+
+a {
+    text-decoration: none;
+}
