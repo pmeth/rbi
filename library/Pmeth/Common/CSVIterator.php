@@ -15,6 +15,14 @@ class CSVIterator implements \Iterator {
 	private $headings = array();
 
 	public function __construct($file, $withheadings = true, $delimiter = ',') {
+		if(!file_exists($file)) {
+			throw new \Exception('The file ' . $file . ' does not exist');
+		}
+
+		if(!is_readable($file)) {
+			throw new \Exception('The file ' . $file . ' is not readable');
+		}
+		
 		$this->filePointer = fopen($file, 'r');
 		$this->delimiter = $delimiter;
 		$this->withheadings = $withheadings;
