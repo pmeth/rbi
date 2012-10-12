@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL & ~E_DEPRECATED);
 
-$filename = "../../rbi2008.nes"; // hardcode for now
+$filename = "rbi2008.nes"; // hardcode for now
 if (!empty($_REQUEST['file'])) {
 	$filename = $_REQUEST['file'];
 }
