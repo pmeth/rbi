@@ -193,7 +193,7 @@ if ($_POST["playertype"] == "hitter") {
 	//echo "$start - $end";
 	$newstring = substr($hexoriginal, $era1start, $numcharacters);
 	$chunked = chunk_split ($newstring, 2, ",");
-	$era1hex = split(",", $chunked);
+	$era1hex = explode(",", $chunked);
 
 	// strip off last entry (it's blank)
 	unset($era1hex[count($era1hex) - 1]);
@@ -206,7 +206,7 @@ if ($_POST["playertype"] == "hitter") {
 	//echo "$start - $end";
 	$newstring = substr($hexoriginal, $era2start, $numcharacters);
 	$chunked = chunk_split ($newstring, 1, ",");
-	$era2hex = split(",", $chunked);
+	$era2hex = explode(",", $chunked);
 
 	// strip off last entry (it's blank)
 	unset($era2hex[count($era2hex) - 1]);
@@ -247,6 +247,22 @@ if ($_POST["playertype"] == "hitter") {
 	//// END ERA SECTION ////
 
 
+	$throws_post = $_POST["throws"];
+	switch ($throws_post) {
+		case "R":
+			$throws = 0;
+			break;
+		case "L":
+			$throws = 1;
+			break;
+		case "SR":
+			$throws = 2;
+			break;
+		case "SL":
+			$throws = 3;
+			break;
+	}
+
 	$sinkerspeed = $_POST["sinkerspeed"];
 	$curvespeed = $_POST["curvespeed"];
 	$fastballspeed = $_POST["fastballspeed"];
@@ -254,6 +270,7 @@ if ($_POST["playertype"] == "hitter") {
 	$stamina = $_POST["stamina"];
 	$sink = $_POST["sink"];
 
+	$replacement = substr_replace($replacement, chr($throws), 7, 1);
 	$replacement = substr_replace($replacement, chr($sinkerspeed), 9, 1);
 	$replacement = substr_replace($replacement, chr($curvespeed), 10, 1);
 	$replacement = substr_replace($replacement, chr($fastballspeed), 11, 1);

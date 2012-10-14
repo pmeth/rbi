@@ -87,7 +87,7 @@ $numcharacters = $end - $start;
 //echo "$start - $end";
 $newstring = substr($hexoriginal, $start, $numcharacters);
 $chunked = chunk_split ($newstring, 4, ",");
-$teamshex = split(",", $chunked);
+$teamshex = explode(",", $chunked);
 
 // strip off last entry (it's blank)
 unset($teamshex[count($teamshex) - 1]);
@@ -255,7 +255,7 @@ if ($playertype == "hitter") {
 	//echo "$start - $end";
 	$newstring = substr($hexoriginal, $start, $numcharacters);
 	$chunked = chunk_split ($newstring, 2, ",");
-	$era1hex = split(",", $chunked);
+	$era1hex = explode(",", $chunked);
 
 	// strip off last entry (it's blank)
 	unset($era1hex[count($era1hex) - 1]);
@@ -268,7 +268,7 @@ if ($playertype == "hitter") {
 	//echo "$start - $end";
 	$newstring = substr($hexoriginal, $start, $numcharacters);
 	$chunked = chunk_split ($newstring, 1, ",");
-	$era2hex = split(",", $chunked);
+	$era2hex = explode(",", $chunked);
 
 	// strip off last entry (it's blank)
 	unset($era2hex[count($era2hex) - 1]);
