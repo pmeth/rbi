@@ -310,7 +310,7 @@ if ($playertype == "hitter") {
 	$curveright = hexToDec(substr($playerhex, 25, 1));
 
 	$stamina = hexToDec(substr($playerhex, 26, 2));
-	$sink = hexToDec(substr($playerhex, 30, 2));
+	$sink = hexToDec(substr($playerhex, 14, 1));
 
 	$record = array (
 		"index" => $index,

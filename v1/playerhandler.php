@@ -270,13 +270,13 @@ if ($_POST["playertype"] == "hitter") {
 	$stamina = $_POST["stamina"];
 	$sink = $_POST["sink"];
 
-	$replacement = substr_replace($replacement, chr($throws), 7, 1);
+	$replacement = substr_replace($replacement, chr($sink * 16 + $throws), 7, 1);
 	$replacement = substr_replace($replacement, chr($sinkerspeed), 9, 1);
 	$replacement = substr_replace($replacement, chr($curvespeed), 10, 1);
 	$replacement = substr_replace($replacement, chr($fastballspeed), 11, 1);
 	$replacement = substr_replace($replacement, chr($curve), 12, 1);
 	$replacement = substr_replace($replacement, chr($stamina), 13, 1);
-	$replacement = substr_replace($replacement, chr($sink), 15, 1);
+	//$replacement = substr_replace($replacement, chr($sink), 7, 1);
 
 /*
 Array
